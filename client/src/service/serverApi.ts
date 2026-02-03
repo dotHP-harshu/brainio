@@ -1,12 +1,15 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 import type {
+  UserInterFace,
   MethodType,
   ResponseInterface,
   ServerResponseInterface,
 } from "../types/types";
 
-const serverUrl = import.meta.env.SERVER_URL;
+const serverUrl = import.meta.env.VITE_SERVER_URL;
+
+console.log(serverUrl)
 
 const api = axios.create({
   baseURL: serverUrl,
@@ -18,17 +21,20 @@ const request = async <T>(
   path: string,
   data: any = null,
 ): Promise<ResponseInterface<T>> => {
+  console.log(path, method);
   try {
     const res: AxiosResponse<ServerResponseInterface<T>> = await api({
       method,
       url: path,
       data,
     });
+    console.log(res)
     if (res.data.success === false) {
       return { data: null, error: res.data.message };
     }
     return { data: res.data.data, error: null };
   } catch (error) {
+    console.log(error)
     if (axios.isAxiosError(error)) {
       return {
         data: null,
@@ -44,3 +50,8 @@ const request = async <T>(
     return { data: null, error: "Something went wrong." };
   }
 };
+
+export const logoutApi = () => request("GET", "/auth/logout");
+export const myDetailApi = () => request<UserInterFace>("GET", "/auth/me");
+
+

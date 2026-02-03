@@ -17,3 +17,9 @@ export interface ServerResponseInterface<T> {
   success: boolean;
   data: T | null;
 }
+
+export interface UserContextType {
+  user: UserInterFace | null;
+  loading:boolean
+  refresh: () => Promise<void>;
+}

@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "main-font";
+  src: url("/fonts/SpaceGrotesk-VariableFont_wght.woff");
+}
+
+@theme {
+  --color-primary: #db2777;
+  --color-secondary: #facc15;
+  --color-text: #000;
+  --color-text-muted:#4b6590;
+}
+body{
+  font-family: "main-font";
+}
+
+.box-shadow{
+    box-shadow: 5px 5px var(--color-text);
+}
+.box{
+  border: 2px solid var(--color-text);
+}
