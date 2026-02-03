@@ -6,8 +6,7 @@ export default function authMiddleware(
   res: Response,
   next: NextFunction,
 ) {
-  if (!req.user)
-    return sendError(res, null, "You are not authorised.", false, 401);
+  if (!req.user) return sendError(res, "You are not authorised.", false, 401);
 
   next();
 }

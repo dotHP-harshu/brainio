@@ -11,12 +11,11 @@ const sendResponse = (
 };
 const sendError = (
   res: Response,
-  err: Error | null,
   message: string,
   success: boolean = false,
   status: number,
 ) => {
-  res.send({ err, message, success, status });
+  res.send({ data:null , message, success, status });
 };
 
 export { sendError, sendResponse };

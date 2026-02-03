@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+interface UserInterface {
+  googleId:string
+  email:string
+  userName:string
+  photo:string
+}
+
 const userSchema = new mongoose.Schema(
   {
     googleId: {
@@ -24,4 +31,5 @@ const userSchema = new mongoose.Schema(
 );
 
 const userModel = mongoose.model("user", userSchema);
+export {UserInterface}
 export default userModel;
