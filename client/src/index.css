@@ -9,15 +9,17 @@
   --color-primary: #db2777;
   --color-secondary: #facc15;
   --color-text: #000;
-  --color-text-muted:#4b6590;
+  --color-text-muted: #4b6590;
+  --breakpoint-xs:30rem;
 }
-body{
+body {
   font-family: "main-font";
+  background-color: color-mix(in srgb, var(--color-primary), transparent 80%);
 }
 
-.box-shadow{
-    box-shadow: 5px 5px var(--color-text);
+.box-shadow {
+  box-shadow: 5px 5px var(--color-text);
 }
-.box{
+.box {
   border: 2px solid var(--color-text);
 }

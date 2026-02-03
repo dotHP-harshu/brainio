@@ -23,3 +23,10 @@ export interface UserContextType {
   loading:boolean
   refresh: () => Promise<void>;
 }
+
+export interface TrendingTopicInterface{
+  name:string;
+  questions:number,
+  testType: "Q&A" | "MCQ"
+  difficulty: "Hard" | "Easy" | "Medium"
+}
