@@ -15,11 +15,17 @@ app.use(
   }),
 );
 
+// body parsers
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // cors
-app.use(cors({
-  origin:config.CLIENT_URL,
-  credentials:true
-}));
+app.use(
+  cors({
+    origin: config.CLIENT_URL,
+    credentials: true,
+  }),
+);
 
 // Passport middleware
 app.use(passport.initialize());
@@ -27,9 +33,11 @@ app.use(passport.session());
 
 // Routes Importations
 import AuthRouter from "./routes/auth.routes";
+import TestRouter from "./routes/test.route";
 
 // Route Declaration
 app.use("/auth", AuthRouter);
+app.use("/tests", TestRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello from the Brainio Server.");

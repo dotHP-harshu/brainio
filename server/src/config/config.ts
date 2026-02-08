@@ -6,7 +6,8 @@ interface ConfigInterface {
   GOOGLE_CLIENT_SECRET:string;
   MONGOOSE_URI:string;
   CLIENT_URL:string;
-  SESSION_SECRET:string
+  SESSION_SECRET:string;
+  OPEN_ROUTER_KEY:string
 }
 
 const config : ConfigInterface = {
@@ -15,7 +16,8 @@ const config : ConfigInterface = {
   PORT: Number(process.env.PORT),
   MONGOOSE_URI:String(process.env.MONGOOSE_URI),
   CLIENT_URL:String(process.env.CLIENT_URL),
-  SESSION_SECRET:String(process.env.SESSION_SECRET)
+  SESSION_SECRET:String(process.env.SESSION_SECRET),
+  OPEN_ROUTER_KEY:String(process.env.OPEN_ROUTER_KEY)
 
 };
 
