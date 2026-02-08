@@ -1,4 +1,7 @@
-import type { TrendingTopicInterface } from "../../types/types";
+import { usePromptContext } from "../../hooks/usePromptContext";
+import type {
+  TrendingTopicInterface,
+} from "../../types/types";
 
 const TRENDING_TOPICS: TrendingTopicInterface[] = [
   {
@@ -22,6 +25,22 @@ const TRENDING_TOPICS: TrendingTopicInterface[] = [
 ];
 
 function TrendingTopics() {
+  const {
+    prompt,
+    changeDifficulty,
+    changeQuestionCount,
+    changeTestType,
+    changeUserQuery,
+  } = usePromptContext();
+  const startTrendingTest = (topic: TrendingTopicInterface) => {
+    changeUserQuery(topic.name);
+    changeDifficulty(topic.difficulty);
+    changeQuestionCount(topic.questions);
+    changeTestType(topic.testType);
+
+    // handle api call
+    console.log(prompt);
+  };
   return (
     <section>
       <div className="flex gap-4 h-max">
@@ -32,7 +51,10 @@ function TrendingTopics() {
       </div>
       <div className="space-y-6 p-6">
         {TRENDING_TOPICS.map((topic) => (
-          <div key={topic.name} className="box box-shadow p-4 flex justify-between items-center max-xs:flex-col max-xs:gap-4 max-xs:items-start">
+          <div
+            key={topic.name}
+            className="box box-shadow p-4 flex justify-between items-center max-xs:flex-col max-xs:gap-4 max-xs:items-start"
+          >
             <div className="space-y-2">
               <h3 className="text-base font-sans font-semibold">
                 {topic.name}
@@ -49,7 +71,10 @@ function TrendingTopics() {
                 </span>
               </div>
             </div>
-            <button className="select-none box shadow-[2px_2px_var(--color-text)] bg-primary text-white text-base font-sans font-semibold self-end px-4 py-1 cursor-pointer transition-shadow hover:shadow-none duration-300 ">
+            <button
+              onClick={() => startTrendingTest(topic)}
+              className="select-none box shadow-[2px_2px_var(--color-text)] bg-primary text-white text-base font-sans font-semibold self-end px-4 py-1 cursor-pointer transition-shadow hover:shadow-none duration-300 "
+            >
               Try Test
             </button>
           </div>

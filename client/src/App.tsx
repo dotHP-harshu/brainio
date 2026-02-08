@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import ProtectedRoutes from "./components/ProtectedRoute";
 import ProfilePage from "./pages/ProfilePage";
 import GeneratorPage from "./pages/GeneratorPage";
+import { PromptContextProvider } from "./context/PromptReducer";
 
 function App() {
   const Router = createBrowserRouter([
@@ -12,8 +13,12 @@ function App() {
       path: "/login",
     },
     {
-      element: <GeneratorPage />,
-      path:"/generator"
+      element: (
+        <PromptContextProvider>
+          <GeneratorPage />
+        </PromptContextProvider>
+      ),
+      path: "/generator",
     },
     {
       element: <ProtectedRoutes />,

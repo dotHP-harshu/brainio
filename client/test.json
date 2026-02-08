@@ -1,0 +1,135 @@
+{
+    "testTitle": "Python Fundamentals - Easy",
+    "questions": [
+        {
+            "id": 1,
+            "type": "objective",
+            "question": "What is the correct way to print 'Hello, World!' in Python?",
+            "options": [
+                "print('Hello, World!')",
+                "System.out.println('Hello, World!')",
+                "console.log('Hello, World!')",
+                "echo 'Hello, World!'"
+            ],
+            "correctAnswer": "print('Hello, World!')",
+            "expectedPoints": 1
+        },
+        {
+            "id": 2,
+            "type": "objective",
+            "question": "Which data type is used to store whole numbers in Python?",
+            "options": [
+                "float",
+                "string",
+                "int",
+                "boolean"
+            ],
+            "correctAnswer": "int",
+            "expectedPoints": 1
+        },
+        {
+            "id": 3,
+            "type": "objective",
+            "question": "What is the purpose of the 'input()' function in Python?",
+            "options": [
+                "To display output to the console",
+                "To read input from the user",
+                "To define a function",
+                "To create a variable"
+            ],
+            "correctAnswer": "To read input from the user",
+            "expectedPoints": 1
+        },
+        {
+            "id": 4,
+            "type": "objective",
+            "question": "Which of the following is a valid variable name in Python?",
+            "options": [
+                "1st_variable",
+                "my-variable",
+                "my_variable",
+                "variable$"
+            ],
+            "correctAnswer": "my_variable",
+            "expectedPoints": 1
+        },
+        {
+            "id": 5,
+            "type": "objective",
+            "question": "What does the '%' operator do in Python?",
+            "options": [
+                "Multiplication",
+                "Division",
+                "Modulo (remainder)",
+                "Exponentiation"
+            ],
+            "correctAnswer": "Modulo (remainder)",
+            "expectedPoints": 1
+        },
+        {
+            "id": 6,
+            "type": "objective",
+            "question": "What is the output of the following code: `print(2 + 2 * 2)`?",
+            "options": [
+                "4",
+                "6",
+                "8",
+                "10"
+            ],
+            "correctAnswer": "6",
+            "expectedPoints": 1
+        },
+        {
+            "id": 7,
+            "type": "objective",
+            "question": "Which keyword is used to define a function in Python?",
+            "options": [
+                "function",
+                "def",
+                "define",
+                "func"
+            ],
+            "correctAnswer": "def",
+            "expectedPoints": 1
+        },
+        {
+            "id": 8,
+            "type": "objective",
+            "question": "What is the purpose of comments in Python code?",
+            "options": [
+                "To make the code run faster",
+                "To explain the code to others",
+                "To define variables",
+                "To create loops"
+            ],
+            "correctAnswer": "To explain the code to others",
+            "expectedPoints": 1
+        },
+        {
+            "id": 9,
+            "type": "objective",
+            "question": "What is the data type of the value `True` in Python?",
+            "options": [
+                "int",
+                "string",
+                "boolean",
+                "float"
+            ],
+            "correctAnswer": "boolean",
+            "expectedPoints": 1
+        },
+        {
+            "id": 10,
+            "type": "objective",
+            "question": "Which of the following is used to check if two values are equal in Python?",
+            "options": [
+                "=",
+                "==",
+                "!=",
+                "<>="
+            ],
+            "correctAnswer": "==",
+            "expectedPoints": 1
+        }
+    ]
+}

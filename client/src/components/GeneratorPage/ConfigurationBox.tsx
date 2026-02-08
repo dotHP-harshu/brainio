@@ -1,8 +1,13 @@
 import { SlidersHorizontal } from "lucide-react";
+import { usePromptContext } from "../../hooks/usePromptContext";
+import type { TestDifficultyTypes, TestStyleType } from "../../types/types";
 
-const DIFFICULTY_OPTIONS = ["Easy", "Medium", "Hard"];
-const QUESTION_TYPES = ["Q&A", "MCQ"];
+const DIFFICULTY_OPTIONS: TestDifficultyTypes[] = ["Easy", "Medium", "Hard"];
+const QUESTION_TYPES: TestStyleType[] = ["Q&A", "MCQ"];
+const QUESTION_COUNT = [5, 10, 15, 20];
 function ConfigurationBox() {
+  const { prompt, changeDifficulty, changeTestType, changeQuestionCount } =
+    usePromptContext();
   return (
     <aside className="box box-shadow p-4 bg-secondary/10 space-y-6">
       <div className="border-b-2 border-text py-2 flex justify-between items-center">
@@ -21,10 +26,14 @@ function ConfigurationBox() {
           <select
             id="question-count"
             className="box p-2 w-full flex justify-between items-center"
+            onChange={(e) => changeQuestionCount(Number(e.target.value))}
+            value={prompt.questionCount}
           >
-            <option value="10 Questions">10 Questions</option>
-            <option value="15 Questions">15 Questions</option>
-            <option value="20 Questions">20 Questions</option>
+            {QUESTION_COUNT.map((op) => (
+              <option key={`${op} Questions`} value={op}>
+                {op} Questions
+              </option>
+            ))}
           </select>
         </div>
         {/* filter  */}
@@ -42,9 +51,13 @@ function ConfigurationBox() {
               >
                 <span className="w-5 h-5 border border-text aspect-square flex justify-center items-center">
                   <input
+                    onChange={(e) =>
+                      changeDifficulty(e.target.value as TestDifficultyTypes)
+                    }
+                    checked={prompt.difficulty === op}
+                    value={op}
                     type="radio"
                     name="difficulty"
-                    id={op}
                     className=" appearance-none w-3 h-3 checked:bg-primary"
                   />
                 </span>
@@ -67,9 +80,13 @@ function ConfigurationBox() {
               >
                 <span className="w-5 h-5 border border-text aspect-square flex justify-center items-center">
                   <input
+                    onChange={(e) =>
+                      changeTestType(e.target.value as TestStyleType)
+                    }
+                    value={op}
+                    checked={prompt.testType === op}
                     type="radio"
-                    name="difficulty"
-                    id={op}
+                    name="test-type"
                     className=" appearance-none w-3 h-3 checked:bg-primary"
                   />
                 </span>

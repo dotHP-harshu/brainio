@@ -5,6 +5,7 @@ import type {
   MethodType,
   ResponseInterface,
   ServerResponseInterface,
+  PromptInterface,
 } from "../types/types";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
@@ -53,5 +54,6 @@ const request = async <T>(
 
 export const logoutApi = () => request("GET", "/auth/logout");
 export const myDetailApi = () => request<UserInterFace>("GET", "/auth/me");
+export const generateTestApi = (prompt:PromptInterface) => request("POST", "/tests/generate", {prompt} )
 
 
