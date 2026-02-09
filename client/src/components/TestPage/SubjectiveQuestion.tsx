@@ -1,12 +1,16 @@
 import { Bot } from "lucide-react";
+import type { SubjectiveQuestionInterface } from "../../types/types";
 
-function SubjectiveQuestion() {
+interface SubjectiveQuestionProps{
+  question:SubjectiveQuestionInterface
+}
+
+function SubjectiveQuestion({question}:SubjectiveQuestionProps) {
   return (
     <>
       {/* Question  */}
       <h3 className="font-bold text-2xl max-xs:text-xl leading-none ">
-        Describe the main differences between UX and UI design in a few
-        sentences.
+        {question.question}
       </h3>
       {/* Question  */}
       {/* answer box */}

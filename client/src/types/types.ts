@@ -50,6 +50,24 @@ export interface PromptContextInterface {
   resetPrompt: () => void;
 }
 
+export type ObjectiveQuestionInterface = {
+  id: number;
+  type: "objective"
+  question: string;
+  options: [string, string, string, string];
+  correctAnswer: string;
+  expectedPoints: number;
+};
+
+export type SubjectiveQuestionInterface = {
+  id: number;
+  type: "subjective";
+  question: string;
+  options: "";
+  correctAnswer: string;
+  expectedPoints: number;
+};
+
 export type PromptReducerActionType =
   | { type: "SET_USER_QUERY"; payload: string }
   | { type: "SET_TEST_TYPE"; payload: TestStyleType }
