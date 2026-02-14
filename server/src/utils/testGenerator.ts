@@ -5,7 +5,8 @@ import isValidTest from "./testValidator";
 import { GeneratedTestInterface } from "../types/types";
 
 const openai = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
+  baseURL: "https://api.groq.com/openai/v1",
+  // baseURL: "https://openrouter.ai/api/v1",
   apiKey: config.OPEN_ROUTER_KEY,
 });
 
@@ -38,7 +39,7 @@ Return ONLY valid JSON.
 `;
 
   const completion = await openai.chat.completions.create({
-    model: "google/gemma-3-12b-it:free",
+    model: "openai/gpt-oss-120b",
     messages: [
       {
         role: "user",

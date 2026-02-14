@@ -3,6 +3,7 @@ type ObjectiveQuestion = {
   type: "objective";
   question: string;
   options: [string, string, string, string];
+  hint: string;
   correctAnswer: string;
   expectedPoints: number;
 };
@@ -12,6 +13,7 @@ type SubjectiveQuestion = {
   type: "subjective";
   question: string;
   options: "";
+  hint: string;
   correctAnswer: string;
   expectedPoints: number;
 };

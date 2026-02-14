@@ -25,7 +25,8 @@ Schema:
       "id": "number",
       "type": "objective"(MCQ) | "subjective"(Q&A),
       "question": "string",
-      "options": ["string", "string", "string", "string"],
+      "options": ["string", "string", "string", "string"] | "" (empty string when subjective),
+      "hint": "string",
       "correctAnswer": "string",
       "expectedPoints": "number"
     }

@@ -29,7 +29,7 @@ function validateTest(test: unknown): boolean {
     const question = ques as Record<string, unknown>;
 
     // validate id
-    if ( typeof question.id !== "number") return false;
+    if (typeof question.id !== "number") return false;
     if (seenIds.has(question.id)) return false;
     seenIds.add(question.id);
 
@@ -42,6 +42,14 @@ function validateTest(test: unknown): boolean {
       !question.question ||
       typeof question.question !== "string" ||
       question.question.trim() === ""
+    )
+      return false;
+
+    // validate question
+    if (
+      !question.hint ||
+      typeof question.hint !== "string" ||
+      question.hint.trim() === ""
     )
       return false;
 
@@ -71,21 +79,17 @@ function validateTest(test: unknown): boolean {
       )
         return false;
     } else if (question.type === "subjective") {
-      if (
-        question.options !== ""
-      )
-        return false;
+      if (question.options !== "") return false;
       // validate correct ans
-      if (
-        question.correctAnswer === ""
-      )
-        return false;
+      if (question.correctAnswer === "") return false;
     }
   }
 
   return true;
 }
 
-export default function isValidTest(test: unknown): test is GeneratedTestInterface {
+export default function isValidTest(
+  test: unknown,
+): test is GeneratedTestInterface {
   return validateTest(test);
 }
