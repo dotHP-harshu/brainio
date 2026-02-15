@@ -52,9 +52,10 @@ export interface PromptContextInterface {
 
 export type ObjectiveQuestionInterface = {
   id: number;
-  type: "objective"
+  type: "objective";
   question: string;
   options: [string, string, string, string];
+  hint:string;
   correctAnswer: string;
   expectedPoints: number;
 };
@@ -64,6 +65,7 @@ export type SubjectiveQuestionInterface = {
   type: "subjective";
   question: string;
   options: "";
+  hint:string;
   correctAnswer: string;
   expectedPoints: number;
 };
@@ -74,3 +76,24 @@ export type PromptReducerActionType =
   | { type: "SET_DIFFICULTY"; payload: TestDifficultyTypes }
   | { type: "SET_QUESTION_COUNT"; payload: number }
   | { type: "RESET_PROMPT" };
+
+export interface AnswerInterface {
+  question: ObjectiveQuestionInterface | SubjectiveQuestionInterface;
+  userAnswer: string;
+}
+
+export interface AnswerContextInterface {
+  answers: AnswerInterface[];
+}
+
+export type AnswerActionInterface = {
+  type: "SET_ANSWER";
+  payload: { id: number; ans: string };
+};
+
+
+export interface TestDataInterface {
+  difficulty: TestDifficultyTypes;
+  testTitle: string;
+  questions: ObjectiveQuestionInterface[] | SubjectiveQuestionInterface[];
+}

@@ -3,11 +3,15 @@ import BrainioLogo from "../BrainioLogo";
 import { useNavigate } from "react-router-dom";
 
 interface StartModalProps{
+  topicName:string,
+  questions:number,
+  difficulty:string,
+  time:number,
   doNext:()=>void
 }
 
 
-function StartTestModal({doNext}:StartModalProps) {
+function StartTestModal({topicName, time,questions, difficulty,doNext}:StartModalProps) {
   const navigate = useNavigate()
   return (
     <div className="w-screen h-screen flex justify-center items-center p-6">
@@ -23,20 +27,20 @@ function StartTestModal({doNext}:StartModalProps) {
           <h3 className="text-sm uppercase font-sans text-primary leading-none">
             topic
           </h3>
-          <h2 className="font-semibold font-sans leading-none text-lg">Modern Architecture</h2>
+          <h2 className="font-semibold font-sans leading-none text-lg">{topicName}</h2>
           <hr className="w-full border my-2 inline-block" />
           <div className="grid grid-cols-3 gap-6 max-xs:grid-cols-1" >
             <div className="space-y-2 max-xs:space-y-0 max-xs:grid max-xs:grid-cols-2">
               <span className="block text-sm leading-none uppercase">questions</span>
-              <span className="block leading-none font-bold text-lg capitalize">10</span>
+              <span className="block leading-none font-bold text-lg capitalize">{questions}</span>
             </div>
             <div className="space-y-2 max-xs:space-y-0 max-xs:grid max-xs:grid-cols-2">
               <span className="block text-sm leading-none uppercase">difficulty</span>
-              <span className="block leading-none font-bold text-lg capitalize">hard</span>
+              <span className="block leading-none font-bold text-lg capitalize">{difficulty}</span>
             </div>
             <div className="space-y-2 max-xs:space-y-0 max-xs:grid max-xs:grid-cols-2">
-              <span className="block text-sm leading-none uppercase">questions</span>
-              <span className="block leading-none font-bold text-lg uppercase">mcq</span>
+              <span className="block text-sm leading-none uppercase">Time</span>
+              <span className="block leading-none font-bold text-lg uppercase">{time} min</span>
             </div>
           </div>
         </div>
