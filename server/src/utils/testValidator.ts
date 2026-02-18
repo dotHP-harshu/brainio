@@ -14,6 +14,17 @@ function validateTest(test: unknown): boolean {
   )
     return false;
 
+  // validate test difficulty
+  if (
+    !testObj.difficulty ||
+    typeof testObj.difficulty !== "string" ||
+    testObj.difficulty.trim() === "" ||
+    (testObj.difficulty !== "Easy" &&
+      testObj.difficulty !== "Medium" &&
+      testObj.difficulty !== "Hard")
+  )
+    return false;
+
   // validate questions
   if (
     !testObj.questions ||
@@ -66,7 +77,7 @@ function validateTest(test: unknown): boolean {
         return false;
       if (
         !question.options.every(
-          (opt) => typeof opt === "string" && opt.trim() !== "",
+          (opt) => typeof opt === "string" && opt.trim() !== ""
         )
       ) {
         return false;
@@ -89,7 +100,7 @@ function validateTest(test: unknown): boolean {
 }
 
 export default function isValidTest(
-  test: unknown,
+  test: unknown
 ): test is GeneratedTestInterface {
   return validateTest(test);
 }

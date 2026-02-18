@@ -20,5 +20,6 @@ type SubjectiveQuestion = {
 
 export type GeneratedTestInterface = {
   testTitle: string;
+  difficulty: "Easy" | "Medium" | "Hard";
   questions: (ObjectiveQuestion | SubjectiveQuestion)[];
 };

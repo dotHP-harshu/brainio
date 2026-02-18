@@ -20,6 +20,7 @@ Rules:
 Schema:
 {
   "testTitle": "string",
+  "difficulty": "Hard" | "Easy" | "Medium";,
   "questions": [
     {
       "id": "number",
