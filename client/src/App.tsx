@@ -6,6 +6,7 @@ import ProfilePage from "./pages/ProfilePage";
 import GeneratorPage from "./pages/GeneratorPage";
 import { PromptContextProvider } from "./context/PromptReducer";
 import TestPage from "./pages/TestPage";
+import { TestContextProvider } from "./context/testContext";
 
 function App() {
   const Router = createBrowserRouter([
@@ -14,7 +15,9 @@ function App() {
       path: "/login",
     },
     {
-      element: <TestPage />,
+      element: (
+        <TestPage />
+      ),
       path: "/test",
     },
     {
@@ -38,7 +41,9 @@ function App() {
 
   return (
     <UserProvider>
-      <RouterProvider router={Router} />
+      <TestContextProvider>
+        <RouterProvider router={Router} />
+      </TestContextProvider>
     </UserProvider>
   );
 }

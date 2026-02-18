@@ -3,147 +3,25 @@ import BrainioLogo from "../components/BrainioLogo";
 import ObjectiveQuestion from "../components/TestPage/ObjectiveQuestion";
 import SubjectiveQuestion from "../components/TestPage/SubjectiveQuestion";
 import { useEffect, useReducer, useState } from "react";
-import type {
-  AnswerInterface,
-  TestDataInterface,
-} from "../types/types";
+import type { AnswerInterface } from "../types/types";
 import StartTestModal from "../components/Modals/StartTestModal";
 import SubmitModal from "../components/Modals/SubmitModal";
 import ExitModal from "../components/Modals/ExitModal";
 import TimeOverModal from "../components/Modals/TimeOverModal";
 import { answerReducer } from "../utils/answerReducer";
-
-const TEST_DATA: TestDataInterface = {
-  difficulty: "Easy",
-  testTitle: "Python Proficiency Test - Medium Level",
-  questions: [
-    {
-      id: 1,
-      type: "objective",
-      question: "Which of the following data types is immutable in Python?",
-      options: ["list", "dictionary", "set", "tuple"],
-      hint: "Think about objects that cannot be changed after creation.",
-      correctAnswer: "tuple",
-      expectedPoints: 1,
-    },
-    {
-      id: 2,
-      type: "objective",
-      question: "What is the output of: print(type([]) is list)",
-      options: ["True", "False", "None", "Error"],
-      hint: "type([]) returns the class of the empty list.",
-      correctAnswer: "True",
-      expectedPoints: 1,
-    },
-    {
-      id: 3,
-      type: "objective",
-      question:
-        "Which of the following statements correctly opens a file for appending?",
-      options: [
-        "open('data.txt', 'r')",
-        "open('data.txt', 'w')",
-        "open('data.txt', 'a')",
-        "open('data.txt', 'x')",
-      ],
-      hint: "Appending adds data to the end without truncating the file.",
-      correctAnswer: "open('data.txt', 'a')",
-      expectedPoints: 1,
-    },
-    {
-      id: 4,
-      type: "objective",
-      question:
-        "What will be the value of x after executing the following code?\n\nx = [1, 2, 3]\nx += [4, 5]\n",
-      options: ["[1, 2, 3, 4, 5]", "[1, 2, 3, [4, 5]]", "[4, 5]", "Error"],
-      hint: "The += operator extends the list in place.",
-      correctAnswer: "[1, 2, 3, 4, 5]",
-      expectedPoints: 1,
-    },
-    {
-      id: 5,
-      type: "objective",
-      question:
-        "Which built-in function can be used to convert an integer to its binary representation as a string?",
-      options: ["bin()", "hex()", "oct()", "format()"],
-      hint: "The function starts with 'b' and returns a string prefixed with '0b'.",
-      correctAnswer: "bin()",
-      expectedPoints: 2,
-    },
-    {
-      id: 6,
-      type: "objective",
-      question:
-        "Consider the following code snippet:\n\ndef foo(a, b=[]):\n    b.append(a)\n    return b\n\nprint(foo(1))\nprint(foo(2))\nWhat is the output?",
-      options: ["[1]\\n[2]", "[1]\\n[1, 2]", "[1, 2]\\n[1, 2]", "Error"],
-      hint: "Default mutable arguments are evaluated once at function definition time.",
-      correctAnswer: "[1]\\n[1, 2]",
-      expectedPoints: 2,
-    },
-    {
-      id: 7,
-      type: "objective",
-      question:
-        "Which of the following statements about Python's GIL (Global Interpreter Lock) is true?",
-      options: [
-        "It allows multiple native threads to execute Python bytecode simultaneously.",
-        "It prevents any form of concurrency in Python programs.",
-        "It ensures that only one thread executes Python bytecode at a time.",
-        "It is only present in Python implementations written in Java.",
-      ],
-      hint: "The GIL is a mutex that protects access to Python objects.",
-      correctAnswer:
-        "It ensures that only one thread executes Python bytecode at a time.",
-      expectedPoints: 2,
-    },
-    {
-      id: 8,
-      type: "objective",
-      question:
-        "What is the result of the following list comprehension?\n\n[ (x, y) for x in [1, 2] for y in [3, 4] if x != y ]",
-      options: [
-        "[(1, 3), (1, 4), (2, 3), (2, 4)]",
-        "[(1, 3), (2, 4)]",
-        "[(1, 3), (1, 4), (2, 3), (2, 4), (1, 1), (2, 2)]",
-        "[]",
-      ],
-      hint: "The condition filters out pairs where the two elements are equal.",
-      correctAnswer: "[(1, 3), (1, 4), (2, 3), (2, 4)]",
-      expectedPoints: 2,
-    },
-    {
-      id: 9,
-      type: "objective",
-      question:
-        "Which of the following statements will correctly create a generator that yields squares of numbers from 0 to 4?",
-      options: [
-        "[x**2 for x in range(5)]",
-        "(x**2 for x in range(5))",
-        "{x**2 for x in range(5)}",
-        "list(x**2 for x in range(5))",
-      ],
-      hint: "Generators use parentheses, not brackets.",
-      correctAnswer: "(x**2 for x in range(5))",
-      expectedPoints: 2,
-    },
-    {
-      id: 10,
-      type: "objective",
-      question: "In Python, what does the expression 'a is b' evaluate?",
-      options: [
-        "Whether a equals b in value",
-        "Whether a and b refer to the same object in memory",
-        "Whether a is greater than b",
-        "Whether a is a subclass of b",
-      ],
-      hint: "The 'is' operator checks identity, not equality.",
-      correctAnswer: "Whether a and b refer to the same object in memory",
-      expectedPoints: 2,
-    },
-  ],
-};
+import { useTestContext } from "../context/testContext";
+import TestNotFound from "../components/TestPage/TestNotFound";
+import { useNavigate } from "react-router-dom";
 
 function TestPage() {
+  const { test: TEST_DATA, setTest } = useTestContext();
+
+  if (!TEST_DATA) {
+    return (
+      <TestNotFound />
+    );
+  }
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [isStartedTest, setIsStartedTest] = useState<boolean>(false);
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
@@ -158,6 +36,8 @@ function TestPage() {
       (q): AnswerInterface => ({ question: q, userAnswer: "" })
     )
   );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isStartedTest) return;
@@ -189,6 +69,8 @@ function TestPage() {
   };
 
   const handleTestExit = () => {
+    navigate("/generator");
+    setTest(null)
     console.log("Exitted");
   };
 
@@ -278,9 +160,8 @@ function TestPage() {
               <button
                 onClick={() => setCurrentQuestionIndex((prev) => prev - 1)}
                 disabled={currentQuestionIndex + 1 <= 1}
-                className={`${
-                  currentQuestionIndex + 1 <= 1 ? "opacity-25" : ""
-                } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none flex justify-center items-center gap-2`}
+                className={`${currentQuestionIndex + 1 <= 1 ? "opacity-25" : ""
+                  } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none flex justify-center items-center gap-2`}
               >
                 <span>
                   <ArrowLeft />
@@ -292,11 +173,10 @@ function TestPage() {
                 disabled={
                   currentQuestionIndex + 1 >= TEST_DATA.questions.length
                 }
-                className={` ${
-                  currentQuestionIndex + 1 >= TEST_DATA.questions.length
-                    ? "opacity-25"
-                    : ""
-                } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none bg-primary/50 flex justify-center items-center gap-2`}
+                className={` ${currentQuestionIndex + 1 >= TEST_DATA.questions.length
+                  ? "opacity-25"
+                  : ""
+                  } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none bg-primary/50 flex justify-center items-center gap-2`}
               >
                 <span className="max-xs:hidden">Next</span>
                 <span>

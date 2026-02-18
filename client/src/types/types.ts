@@ -55,7 +55,7 @@ export type ObjectiveQuestionInterface = {
   type: "objective";
   question: string;
   options: [string, string, string, string];
-  hint:string;
+  hint: string;
   correctAnswer: string;
   expectedPoints: number;
 };
@@ -65,7 +65,7 @@ export type SubjectiveQuestionInterface = {
   type: "subjective";
   question: string;
   options: "";
-  hint:string;
+  hint: string;
   correctAnswer: string;
   expectedPoints: number;
 };
@@ -91,9 +91,13 @@ export type AnswerActionInterface = {
   payload: { id: number; ans: string };
 };
 
-
 export interface TestDataInterface {
   difficulty: TestDifficultyTypes;
   testTitle: string;
   questions: ObjectiveQuestionInterface[] | SubjectiveQuestionInterface[];
+}
+
+export interface TestContextInterface {
+  test: TestDataInterface | null;
+  setTest: (test: TestDataInterface | null) => void;
 }

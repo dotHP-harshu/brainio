@@ -6,11 +6,17 @@ import InputSection from "../components/GeneratorPage/InputSection";
 import TrendingTopics from "../components/GeneratorPage/TrendingTopics";
 import { generateTestApi } from "../service/serverApi";
 import { usePromptContext } from "../hooks/usePromptContext";
+import { useTestContext } from "../context/testContext";
+import type { TestDataInterface } from "../types/types";
+import { useNavigate } from "react-router-dom";
 
 function GeneratorPage() {
   const [generating, setGenerating] = useState<boolean>(false);
   const [testGenerationError, setTestGenerationError] = useState<string>("");
   const {prompt, resetPrompt} = usePromptContext()
+  const navigate = useNavigate();
+
+  const {setTest} = useTestContext()
 
 const generateTest = async () => {
     setTestGenerationError("");
@@ -25,6 +31,8 @@ const generateTest = async () => {
     }
     if (data) {
       console.log(data);
+      setTest(data as TestDataInterface)
+      navigate("/test");
       resetPrompt();
       return setGenerating(false);
     }
