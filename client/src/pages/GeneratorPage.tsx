@@ -40,7 +40,7 @@ const generateTest = async () => {
 
   if (generating) {
     return (
-      <div className="w-screen h-screen fixed top-0 left-0 z-50 bg-secondary/30 backdrop-blur-3xl">
+      <div className="w-screen h-screen fixed top-0 left-0 z-50 bg-secondary/30 backdrop-blur-3xl flex justify-center items-center">
         <BanterLoader />
       </div>
     );
