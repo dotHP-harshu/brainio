@@ -1,4 +1,4 @@
-const BanterLoader = () => {
+const BanterLoader = ({para}: {para: string}) => {
   return (
     <>
       <div className="banter-loader-container">
@@ -8,7 +8,7 @@ const BanterLoader = () => {
           <div className="banter-loader-box"></div>
         </div>
         <p className="banter-loader-text ">
-          Generating your personalized test
+         {para}
           <span className="banter-loader-dots">
             <span>.</span><span>.</span><span>.</span>
           </span>
