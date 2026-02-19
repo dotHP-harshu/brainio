@@ -3,7 +3,7 @@ import BrainioLogo from "../components/BrainioLogo";
 import ObjectiveQuestion from "../components/TestPage/ObjectiveQuestion";
 import SubjectiveQuestion from "../components/TestPage/SubjectiveQuestion";
 import { useEffect, useReducer, useState } from "react";
-import type { AnswerInterface } from "../types/types";
+import type { AnswerInterface, SubmitTestInterface, TestResultInterface } from "../types/types";
 import StartTestModal from "../components/Modals/StartTestModal";
 import SubmitModal from "../components/Modals/SubmitModal";
 import ExitModal from "../components/Modals/ExitModal";
@@ -12,9 +12,16 @@ import { answerReducer } from "../utils/answerReducer";
 import { useTestContext } from "../context/testContext";
 import TestNotFound from "../components/TestPage/TestNotFound";
 import { useNavigate } from "react-router-dom";
+import { evaluateTestApi } from "../service/serverApi";
+import BanterLoader from "../components/BanterLoader";
+import ErrorCompo from "../components/ErrorCompo";
+import { useResultContext } from "../context/resultContext";
 
 function TestPage() {
+
+  // contexts
   const { test: TEST_DATA, setTest } = useTestContext();
+  const { setTestResult } = useResultContext()
 
   if (!TEST_DATA) {
     return (
@@ -22,12 +29,14 @@ function TestPage() {
     );
   }
 
+  // page states
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [isStartedTest, setIsStartedTest] = useState<boolean>(false);
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
   const [showExitModal, setShowExitModal] = useState<boolean>(false);
   const [timeOver, setTimeOver] = useState<boolean>(false);
-
+  const [submitting, setSubmitting] = useState<boolean>(false)
+  const [testPageError, setTestPageError] = useState<string>("")
   const [time, setTime] = useState<number>(TEST_DATA.questions.length * 60);
 
   const [answers, answerDispatch] = useReducer(
@@ -63,9 +72,28 @@ function TestPage() {
     setIsStartedTest(true);
   };
 
-  const handleTestSubmit = () => {
+  const handleTestSubmit = async () => {
     console.log("submitted");
-    console.log(answers);
+
+    const testToSubmit: SubmitTestInterface = {
+      title: TEST_DATA.testTitle,
+      timeSpent: (TEST_DATA.questions.length * 60) - time,
+      numberOfQuestions: TEST_DATA.questions.length,
+      answers: answers,
+      difficulty: TEST_DATA.difficulty
+    }
+    console.log(testToSubmit)
+    setSubmitting(true)
+    const { data, error } = await evaluateTestApi(testToSubmit);
+    if (error) {
+      setSubmitting(false)
+      return setTestPageError(error)
+    }
+    if (data) {
+      setTestResult(data as TestResultInterface)
+      navigate("/result")
+    }
+
   };
 
   const handleTestExit = () => {
@@ -73,6 +101,16 @@ function TestPage() {
     setTest(null)
     console.log("Exitted");
   };
+
+
+  // conditional rendering
+  if (submitting) {
+    return (
+      <div className="w-screen h-screen fixed top-0 left-0 z-50 bg-secondary/30 backdrop-blur-3xl flex justify-center items-center">
+        <BanterLoader para="Analysing your test" />
+      </div>
+    )
+  }
 
   if (!isStartedTest) {
     return (
@@ -91,6 +129,9 @@ function TestPage() {
 
   return (
     <>
+      {
+        testPageError !== "" && <ErrorCompo errorMsg={testPageError} hideError={() => setTestPageError("")} retryFunc={handleTestSubmit} />
+      }
       {showSubmitModal && (
         <SubmitModal
           doNext={handleTestSubmit}
@@ -135,8 +176,8 @@ function TestPage() {
         <div className="box box-shadow px-4 py-2 w-fit mx-auto">
           <h2 className="text-xl font-bold tracking-tight font-sans">
             Question{" "}
-            <span className="text-primary">{currentQuestionIndex + 1} </span>of
-            10
+            <span className="text-primary">{currentQuestionIndex + 1} </span>of{" "}
+            {TEST_DATA.questions.length}
           </h2>
         </div>
         <div className="max-w-4xl w-full mx-auto mt-10">

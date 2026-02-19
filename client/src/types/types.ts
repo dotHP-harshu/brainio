@@ -96,8 +96,31 @@ export interface TestDataInterface {
   testTitle: string;
   questions: ObjectiveQuestionInterface[] | SubjectiveQuestionInterface[];
 }
+export interface SubmitTestInterface {
+  title: string;
+  timeSpent: number;
+  numberOfQuestions: number;
+  difficulty: TestDifficultyTypes;
+  answers: AnswerInterface[];
+}
 
 export interface TestContextInterface {
   test: TestDataInterface | null;
   setTest: (test: TestDataInterface | null) => void;
+}
+
+export interface TestResultInterface {
+  title: string;
+  result: "Passed" | "Failed";
+  resultLabel: "Excellent" | "Good" | "Average" | "Poor";
+  correctAnswers: number;
+  totalQuestions: number;
+  timeSpent: number; // in seconds
+  accuracyRate: number;
+  aiInsight: string;
+}
+
+export interface ResultContextInterface{
+  testResult:TestResultInterface | null
+  setTestResult:(test:TestResultInterface)=>void
 }

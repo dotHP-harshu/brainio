@@ -6,11 +6,13 @@ import type {
   ResponseInterface,
   ServerResponseInterface,
   PromptInterface,
+  TestDataInterface,
+  SubmitTestInterface,
 } from "../types/types";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
-console.log(serverUrl)
+console.log(serverUrl);
 
 const api = axios.create({
   baseURL: serverUrl,
@@ -20,7 +22,7 @@ const api = axios.create({
 const request = async <T>(
   method: MethodType,
   path: string,
-  data: any = null,
+  data: any = null
 ): Promise<ResponseInterface<T>> => {
   console.log(path, method);
   try {
@@ -29,13 +31,12 @@ const request = async <T>(
       url: path,
       data,
     });
-    console.log(res)
     if (res.data.success === false) {
       return { data: null, error: res.data.message };
     }
     return { data: res.data.data, error: null };
   } catch (error) {
-    console.log(error)
+    console.log(error);
     if (axios.isAxiosError(error)) {
       return {
         data: null,
@@ -54,6 +55,7 @@ const request = async <T>(
 
 export const logoutApi = () => request("GET", "/auth/logout");
 export const myDetailApi = () => request<UserInterFace>("GET", "/auth/me");
-export const generateTestApi = (prompt:PromptInterface) => request("POST", "/tests/generate", {prompt} )
-
-
+export const generateTestApi = (prompt: PromptInterface) =>
+  request("POST", "/tests/generate", { prompt });
+export const evaluateTestApi = (test: SubmitTestInterface) =>
+  request("POST", "/tests/evaluate", { test });

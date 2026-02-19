@@ -8,6 +8,7 @@ import { PromptContextProvider } from "./context/PromptReducer";
 import TestPage from "./pages/TestPage";
 import { TestContextProvider } from "./context/testContext";
 import ResultPage from "./pages/ResultPage";
+import { ResultContextProvider } from "./context/resultContext";
 
 function App() {
   const Router = createBrowserRouter([
@@ -49,7 +50,9 @@ function App() {
   return (
     <UserProvider>
       <TestContextProvider>
-        <RouterProvider router={Router} />
+        <ResultContextProvider>
+          <RouterProvider router={Router} />
+        </ResultContextProvider>
       </TestContextProvider>
     </UserProvider>
   );

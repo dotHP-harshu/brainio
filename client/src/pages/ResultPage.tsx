@@ -1,6 +1,29 @@
-import { Trophy, CheckCircle2, Timer, Zap, Sparkles, ArrowRight, LayoutDashboard, ArrowLeft } from "lucide-react";
+import { Trophy, CheckCircle2, Timer, Zap, Sparkles, LayoutDashboard, ArrowLeft } from "lucide-react";
+import { useResultContext } from "../context/resultContext";
+import ResultNotFound from "../components/Result/ResultNotFound";
+
+// const RESULT_DATA = {
+//     title: "Advanced Algebra II",
+//     result: "Passed", // Changed from result to result like "Passed" | "Failed"
+//     resultLabel: "Excellent", // Changed from resultLabel to resultLabel like "Excellent" | "Good" | "Average" | "Poor"
+//     correctAnswers: 18,
+//     totalQuestions: 20,
+//     timeSpent: 2000, // in seconds
+//     accuracyRate: 90,
+//     aiInsight: "You're a natural at Algebra! Your speed on basic equations is top-tier. Focus a bit more on Quadratic Equations next time to hit that 100%."
+// }
+
 
 const ResultPage = () => {
+    const { testResult: RESULT_DATA } = useResultContext()
+
+
+    if (!RESULT_DATA) {
+        return (
+            <ResultNotFound />
+        )
+    }
+
     return (
         <div className="min-h-screen bg-[#F3F4F0] text-black pb-10">
 
@@ -14,7 +37,7 @@ const ResultPage = () => {
                         Test Completed! 🏆
                     </h1>
                     <div className="mt-4 box bg-[#FAD9D1] px-6 py-2 font-bold text-sm tracking-tight border-black uppercase">
-                        Quiz: Advanced Algebra II
+                        Test: {RESULT_DATA.title}
                     </div>
                 </div>
 
@@ -22,9 +45,9 @@ const ResultPage = () => {
                 <div className="w-full box box-shadow bg-white flex flex-col items-center py-12 mb-8 relative">
                     <div className="absolute top-0 left-0 w-full h-2 bg-[#FF6B35]"></div>
                     <p className="uppercase font-bold text-gray-500 tracking-widest text-xs mb-2">Final Score</p>
-                    <h2 className="text-[120px] font-black leading-none text-[#FF6B35] tracking-tighter mb-6">90%</h2>
+                    <h2 className="text-[120px] font-black leading-none text-[#FF6B35] tracking-tighter mb-6">{RESULT_DATA.accuracyRate}%</h2>
                     <div className="bg-[#008000] text-white font-bold px-6 py-2 box border-[#000000] uppercase tracking-wider text-sm">
-                        Excellent • Passed
+                        {RESULT_DATA.resultLabel} • {RESULT_DATA.result}
                     </div>
                 </div>
 
@@ -35,7 +58,7 @@ const ResultPage = () => {
                             <CheckCircle2 size={18} fill="currentColor" className="text-white" />
                             <span className="uppercase font-bold text-[10px] tracking-widest text-black">Correct Answers</span>
                         </div>
-                        <p className="text-4xl font-bold tracking-tighter">18/20</p>
+                        <p className="text-4xl font-bold tracking-tighter">{RESULT_DATA.correctAnswers}/{RESULT_DATA.totalQuestions}</p>
                     </div>
 
                     <div className="box box-shadow bg-white p-6 flex flex-col gap-4">
@@ -43,7 +66,7 @@ const ResultPage = () => {
                             <Timer size={18} className="text-[#FF6B35]" />
                             <span className="uppercase font-bold text-[10px] tracking-widest">Time Spent</span>
                         </div>
-                        <p className="text-4xl font-bold tracking-tighter">12m 30s</p>
+                        <p className="text-4xl font-bold tracking-tighter">{Math.floor(RESULT_DATA.timeSpent / 60)}m {RESULT_DATA.timeSpent % 60}s</p>
                     </div>
 
                     <div className="box box-shadow bg-white p-6 flex flex-col gap-4">
@@ -51,7 +74,7 @@ const ResultPage = () => {
                             <Zap size={18} className="text-[#FF6B35]" />
                             <span className="uppercase font-bold text-[10px] tracking-widest">Accuracy Rate</span>
                         </div>
-                        <p className="text-4xl font-bold tracking-tighter">90%</p>
+                        <p className="text-4xl font-bold tracking-tighter">{RESULT_DATA.accuracyRate}   </p>
                     </div>
                 </div>
 
@@ -66,7 +89,8 @@ const ResultPage = () => {
                     <div className="md:w-2/3 p-8 flex flex-col justify-center">
                         <h3 className="italic font-black text-2xl uppercase mb-4 tracking-tighter">Brainio's Take</h3>
                         <p className="text-lg leading-snug mb-6">
-                            You're a natural at <span className="bg-secondary px-1 font-bold border-b-2 border-black">Algebra</span>! Your speed on basic equations is top-tier. Focus a bit more on <span className="bg-[#FDF2F0] border-b-2 border-[#FF6B35] font-bold">Quadratic Equations</span> next time to hit that 100%.
+                            {/* You're a natural at <span className="bg-secondary px-1 font-bold border-b-2 border-black">Algebra</span>! Your speed on basic equations is top-tier. Focus a bit more on <span className="bg-[#FDF2F0] border-b-2 border-[#FF6B35] font-bold">Quadratic Equations</span> next time to hit that 100%. */}
+                            {RESULT_DATA.aiInsight}
                         </p>
                     </div>
                 </div>
