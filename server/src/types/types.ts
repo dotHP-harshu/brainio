@@ -23,3 +23,15 @@ export type GeneratedTestInterface = {
   difficulty: "Easy" | "Medium" | "Hard";
   questions: (ObjectiveQuestion | SubjectiveQuestion)[];
 };
+
+
+export type ResultInterface = {
+  title:string;
+  result: "Passed" | "Failed",
+  resultLabel:"Excellent" | "Good" | "Average" | "Poor";
+  totalQuestions:number;
+  correctAnswers:number;
+  timeSpent:number;
+  accuracyRate:number
+  aiInsight:string
+}

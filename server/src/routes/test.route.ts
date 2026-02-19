@@ -1,10 +1,11 @@
-import express from "express"
-import { generateTestController } from "../controllers/test.controller";
+import express from "express";
+import {
+  generateTestController,
+  evaluateTestController,
+} from "../controllers/test.controller";
 const TestRouter = express.Router();
 
+TestRouter.post("/generate", generateTestController);
+TestRouter.post("/evaluate", evaluateTestController);
 
-TestRouter.post("/generate", generateTestController)
-
-
-
-export default TestRouter
+export default TestRouter;
