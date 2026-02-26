@@ -9,6 +9,7 @@ import TestPage from "./pages/TestPage";
 import { TestContextProvider } from "./context/testContext";
 import ResultPage from "./pages/ResultPage";
 import { ResultContextProvider } from "./context/resultContext";
+import HistoryPage from "./pages/HistoryPage";
 
 function App() {
   const Router = createBrowserRouter([
@@ -27,6 +28,12 @@ function App() {
         <ResultPage />
       ),
       path: "/result",
+    },
+    {
+      element: (
+        <HistoryPage />
+      ),
+      path: "/history",
     },
     {
       element: (
