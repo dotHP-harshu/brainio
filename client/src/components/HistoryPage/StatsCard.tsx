@@ -1,13 +1,15 @@
 import { BarChart, Download, PlusCircle } from 'lucide-react';
-import type { HistoryStats } from '../../pages/HistoryPage';
 import { formatTimeSpent } from '../../utils/historyFormatters';
+import type { HistoryStatsInterface } from '../../types/types';
+import { useNavigate } from 'react-router-dom';
 
 interface StatsCardProps {
-  stats: HistoryStats;
+  stats: HistoryStatsInterface;
   onExport: () => void;
 }
 
 function StatsCard({ stats, onExport }: StatsCardProps) {
+  const navigate = useNavigate();
   return (
     <div className="box box-shadow">
       {/* Header */}
@@ -25,7 +27,7 @@ function StatsCard({ stats, onExport }: StatsCardProps) {
           <p className="text-xs uppercase font-bold text-text-muted tracking-wide mb-1">
             TOTAL QUIZZES
           </p>
-          <p className="text-4xl font-bold">{stats.totalQuizzes}</p>
+          <p className="text-4xl font-bold">{stats.totalTests}</p>
         </div>
 
         {/* Time Spent Learning */}
@@ -33,18 +35,18 @@ function StatsCard({ stats, onExport }: StatsCardProps) {
           <p className="text-xs uppercase font-bold text-text-muted tracking-wide mb-1">
             TIME SPENT LEARNING
           </p>
-          <p className="text-4xl font-bold">{formatTimeSpent(stats.timeSpentLearning)}</p>
+          <p className="text-4xl font-bold">{formatTimeSpent(stats.totalTime)}</p>
         </div>
         {/* start new quiz */}
         <div className="box p-4 bg-primary">
-          <p className="text-xs uppercase font-bold text-white tracking-wide mb-1 flex justify-center items-center gap-1">
+          <button onClick={()=> navigate("/generator")} className="text-xs uppercase font-bold text-white tracking-wide mb-1 flex justify-center items-center gap-1 w-full cursor-pointer">
             <span>
               <PlusCircle size={16} className='text-white' />
             </span>
             <span>
               start new quiz
             </span>
-          </p>
+          </button>
         </div>
       </div>
 

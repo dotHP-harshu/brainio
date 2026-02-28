@@ -1,8 +1,9 @@
 import type { HistoryItem } from '../../pages/HistoryPage';
+import type { completedTestInterface } from '../../types/types';
 import HistoryTableRow from './HistoryTableRow';
 
 interface HistoryTableProps {
-  items: HistoryItem[];
+  items: completedTestInterface[];
   onReview: (id: string) => void;
   onRetake: (id: string) => void;
 }
@@ -18,13 +19,13 @@ function HistoryTable({ items, onReview, onRetake }: HistoryTableProps) {
             <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">SCORE</th>
             <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">DATE</th>
             <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">DURATION</th>
-            <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">ACTIONS</th>
+            <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden hidden">ACTIONS</th>
           </tr>
         </thead>
         <tbody>
           {items.map((item) => (
             <HistoryTableRow
-              key={item.id}
+              key={item._id}
               item={item}
               onReview={onReview}
               onRetake={onRetake}

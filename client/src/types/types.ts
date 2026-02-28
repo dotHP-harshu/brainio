@@ -120,7 +120,36 @@ export interface TestResultInterface {
   aiInsight: string;
 }
 
-export interface ResultContextInterface{
-  testResult:TestResultInterface | null
-  setTestResult:(test:TestResultInterface)=>void
+export interface ResultContextInterface {
+  testResult: TestResultInterface | null;
+  setTestResult: (test: TestResultInterface) => void;
+}
+
+export interface HistoryStatsInterface {
+  totalTests: number;
+  totalTime: number; // in seconds
+}
+
+export interface completedTestInterface {
+  accuracyRate: number;
+  aiInsight: string;
+  correctAnswers: number;
+  createdAt: Date;
+  result: string;
+  resultLabel: string;
+  timeSpent: number;
+  title: string;
+  totalQuestions: string;
+  type: string;
+  updatedAt: Date;
+  userId: string;
+  __v: number;
+  _id: string;
+}
+
+export interface completedTestsHistoryInterface{
+  tests: completedTestInterface[];
+  page:number;
+  limit:number;
+  totalPage:number
 }

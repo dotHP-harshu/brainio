@@ -12,7 +12,7 @@ import { answerReducer } from "../utils/answerReducer";
 import { useTestContext } from "../context/testContext";
 import TestNotFound from "../components/TestPage/TestNotFound";
 import { useNavigate } from "react-router-dom";
-import { evaluateTestApi } from "../service/serverApi";
+import { evaluateTestApi, setTestApi } from "../service/serverApi";
 import BanterLoader from "../components/BanterLoader";
 import ErrorCompo from "../components/ErrorCompo";
 import { useResultContext } from "../context/resultContext";
@@ -90,7 +90,12 @@ function TestPage() {
       return setTestPageError(error)
     }
     if (data) {
-      setTestResult(data as TestResultInterface)
+      const result = data as TestResultInterface;
+      setTestResult(result);
+      const { error } = await setTestApi("699f221036ff6d535103c67a", result.title, result.result, result.resultLabel, result.correctAnswers, result.totalQuestions, "mcq", result.timeSpent, result.accuracyRate, result.aiInsight);
+      if(error){
+        return console.log(error)
+      }
       navigate("/result")
     }
 

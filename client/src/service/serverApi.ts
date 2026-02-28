@@ -6,7 +6,6 @@ import type {
   ResponseInterface,
   ServerResponseInterface,
   PromptInterface,
-  TestDataInterface,
   SubmitTestInterface,
 } from "../types/types";
 
@@ -22,7 +21,7 @@ const api = axios.create({
 const request = async <T>(
   method: MethodType,
   path: string,
-  data: any = null
+  data: any = null,
 ): Promise<ResponseInterface<T>> => {
   console.log(path, method);
   try {
@@ -59,3 +58,41 @@ export const generateTestApi = (prompt: PromptInterface) =>
   request("POST", "/tests/generate", { prompt });
 export const evaluateTestApi = (test: SubmitTestInterface) =>
   request("POST", "/tests/evaluate", { test });
+
+export const setTestApi = (
+  userId: string,
+  title: string,
+  result: string,
+  resultLabel: string,
+  correctAnswers: number,
+  totalQuestions: number,
+  type: string,
+  timeSpent: number,
+  accuracyRate: number,
+  aiInsight: string,
+) =>
+  request("POST", `/history/set/test/${userId}`, {
+    title,
+    result,
+    resultLabel,
+    correctAnswers,
+    totalQuestions,
+    type,
+    timeSpent,
+    accuracyRate,
+    aiInsight,
+  });
+
+export const getTestsApi = (
+  userId: string,
+  limit: number,
+  page: number,
+  search: string = "",
+) =>
+  request(
+    "GET",
+    `/history/get/tests/${userId}?limit=${limit}&page=${page}&search=${search}`,
+  );
+
+export const getHistoryStateApi = (userId: string) =>
+  request("GET", `/history/get/state/${userId}`);
