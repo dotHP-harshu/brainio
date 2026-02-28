@@ -11,6 +11,7 @@ import type {
   HistoryStatsInterface,
 } from "../types/types";
 import { Search } from "lucide-react";
+import { useUser } from "../hooks/useUser";
 
 export type TestType = "MCQ" | "Q&A";
 export type TopicIcon = "beaker" | "book" | "calculator";
@@ -106,6 +107,11 @@ function HistoryPage() {
   const [historyState, setHistoryState] =
     useState<HistoryStatsInterface | null>(null);
 
+
+  const { user } = useUser()
+
+
+
   const [testsHistory, setTestsHistory] =
     useState<completedTestsHistoryInterface | null>(null);
 
@@ -126,22 +132,22 @@ function HistoryPage() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Fetch new data for the page
-    getTests(testsLimit, page, searchQuery);
+    getTests(user?._id, testsLimit, page, searchQuery);
   };
 
-  
+
 
 
   // get tests
   const getTests = async (
+    userId: string,
     testsLimit: number,
     currentPage: number,
     search: string = "",
   ) => {
     setIsLoadingTests(true);
     const { error, data } = await getTestsApi(
-      "699f221036ff6d535103c67a",
+      userId,
       testsLimit,
       currentPage,
       search,
@@ -158,9 +164,9 @@ function HistoryPage() {
   };
 
   // get states
-  const getHistoryStates = async () => {
+  const getHistoryStates = async (userId: string) => {
     const { data, error } = await getHistoryStateApi(
-      "699f221036ff6d535103c67a",
+      userId,
     );
     if (error) {
       console.log(error);
@@ -186,12 +192,14 @@ function HistoryPage() {
   };
 
   useEffect(() => {
-    getHistoryStates();
-  }, []);
+    if (!user) return
+    getHistoryStates(user._id);
+  }, [user]);
 
   useEffect(() => {
-    getTests(testsLimit, currentPage, searchQuery);
-  }, []);
+    if (!user) return
+    getTests(user._id, testsLimit, currentPage, searchQuery);
+  }, [user, currentPage, searchQuery, testsLimit]);
 
   // optional rendering
   if (isLoadingPage) {
@@ -219,7 +227,7 @@ function HistoryPage() {
                 <button
                   onClick={() => {
                     setCurrentPage(1);
-                    getTests(testsLimit, currentPage, searchQuery);
+                    getTests(user?._id, testsLimit, 1, searchQuery);
                   }}
                   className="bg-primary box box-shadow p-2 flex justify-center items-center gap-2 font-sans font-semibold uppercase cursor-pointer"
                 >
@@ -231,19 +239,33 @@ function HistoryPage() {
               </div>
 
               {isLoadingTests && <div>Loading tests...</div>}
-              {!isLoadingPage && testsHistory && (
-                <>
-                  <HistoryTable
-                    items={testsHistory?.tests}
-                    onReview={handleReview}
-                    onRetake={handleRetake}
-                  />
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={testsHistory.totalPage}
-                    onPageChange={handlePageChange}
-                  />
-                </>
+              {!isLoadingTests && testsHistory && (
+                testsHistory.tests.length === 0 ? (
+                  <div className="flex justify-center items-center w-full ">
+                    <div className="flex flex-col justify-center items-center">
+                      <h2 className="text-2xl font-bold">No tests found</h2>
+                      <p className="text-lg font-medium">
+                        You have not taken any tests yet.
+                      </p>
+                      <p className="text-lg font-medium">
+                        Click <a href="/generator" className="text-primary ">here</a> to take a test
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <HistoryTable
+                      items={testsHistory?.tests}
+                      onReview={handleReview}
+                      onRetake={handleRetake}
+                    />
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={testsHistory.totalPage}
+                      onPageChange={handlePageChange}
+                    />
+                  </>
+                )
               )}
             </div>
 

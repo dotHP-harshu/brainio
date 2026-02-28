@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { UserContext } from "../context/userContext";
 import { User } from "lucide-react";
+import { useUser } from "../hooks/useUser";
 
 function ProfilePage() {
-  const { user } = useContext(UserContext)!;
+  const { user } = useUser()!;
 
   return (
     <main>

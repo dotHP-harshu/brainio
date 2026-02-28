@@ -31,12 +31,6 @@ function App() {
     },
     {
       element: (
-        <HistoryPage />
-      ),
-      path: "/history",
-    },
-    {
-      element: (
         <PromptContextProvider>
           <GeneratorPage />
         </PromptContextProvider>
@@ -50,6 +44,10 @@ function App() {
           path: "/profile",
           element: <ProfilePage />,
         },
+        {
+          path: "/history",
+          element: <HistoryPage />
+        }
       ],
     },
   ]);

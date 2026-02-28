@@ -16,6 +16,7 @@ import { evaluateTestApi, setTestApi } from "../service/serverApi";
 import BanterLoader from "../components/BanterLoader";
 import ErrorCompo from "../components/ErrorCompo";
 import { useResultContext } from "../context/resultContext";
+import { useUser } from "../hooks/useUser";
 
 function TestPage() {
 
@@ -45,6 +46,8 @@ function TestPage() {
       (q): AnswerInterface => ({ question: q, userAnswer: "" })
     )
   );
+
+  const { user } = useUser()
 
   const navigate = useNavigate();
 
@@ -92,9 +95,12 @@ function TestPage() {
     if (data) {
       const result = data as TestResultInterface;
       setTestResult(result);
-      const { error } = await setTestApi("699f221036ff6d535103c67a", result.title, result.result, result.resultLabel, result.correctAnswers, result.totalQuestions, "mcq", result.timeSpent, result.accuracyRate, result.aiInsight);
-      if(error){
-        return console.log(error)
+      // save result if user is logged in
+      if (user) {
+        const { error } = await setTestApi(user._id, result.title, result.result, result.resultLabel, result.correctAnswers, result.totalQuestions, "mcq", result.timeSpent, result.accuracyRate, result.aiInsight);
+        if (error) {
+          return console.log(error)
+        }
       }
       navigate("/result")
     }
