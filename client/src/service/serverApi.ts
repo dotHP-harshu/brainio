@@ -31,6 +31,7 @@ const request = async <T>(
       data,
     });
     if (res.data.success === false) {
+      console.log(res.data)
       return { data: null, error: res.data.message };
     }
     return { data: res.data.data, error: null };
@@ -66,7 +67,7 @@ export const setTestApi = (
   resultLabel: string,
   correctAnswers: number,
   totalQuestions: number,
-  type: string,
+  difficulty: string,
   timeSpent: number,
   accuracyRate: number,
   aiInsight: string,
@@ -77,7 +78,7 @@ export const setTestApi = (
     resultLabel,
     correctAnswers,
     totalQuestions,
-    type,
+    difficulty,
     timeSpent,
     accuracyRate,
     aiInsight,

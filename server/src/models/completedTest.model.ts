@@ -21,7 +21,7 @@ const completedTestSchema = new mongoose.Schema(
     totalQuestions: {
       type: Number,
     },
-    type: {
+    difficulty: {
       type: String,
     },
     timeSpent: {

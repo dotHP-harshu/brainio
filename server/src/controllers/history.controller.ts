@@ -98,7 +98,7 @@ export const setTest = async (req: Request, res: Response) => {
 
     const {
       title,
-      type,
+      difficulty,
       result,
       resultLabel,
       correctAnswers,
@@ -115,7 +115,7 @@ export const setTest = async (req: Request, res: Response) => {
       resultLabel,
       correctAnswers,
       totalQuestions,
-      type,
+      difficulty,
       timeSpent,
       accuracyRate,
       aiInsight,

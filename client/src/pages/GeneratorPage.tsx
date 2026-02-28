@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import BanterLoader from "../components/BanterLoader";
 import ConfigurationBox from "../components/GeneratorPage/ConfigurationBox";
 import HowItWorks from "../components/GeneratorPage/HowItWorks";
@@ -15,7 +15,6 @@ function GeneratorPage() {
   const [generating, setGenerating] = useState<boolean>(false);
   const [testGenerationError, setTestGenerationError] = useState<string>("");
   const { prompt, resetPrompt } = usePromptContext()
-  const errorBoxRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const { setTest } = useTestContext()
@@ -40,19 +39,6 @@ function GeneratorPage() {
     }
   };
 
-  useEffect(() => {
-    const hideErrorBox = (e: MouseEvent) => {
-      if (errorBoxRef.current && !errorBoxRef.current.contains(e.target as Node)) {
-        setTestGenerationError("")
-      }
-    }
-
-    window.addEventListener("click", hideErrorBox)
-
-    return () => {
-      window.removeEventListener("click", hideErrorBox)
-    }
-  }, [testGenerationError])
 
 
   if (generating) {

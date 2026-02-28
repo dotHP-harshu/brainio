@@ -49,5 +49,5 @@ export const evaluateTest = async (
     throw new Error("AI failed to generate valid test format");
   }
 
-  return evaluateTest(prompt, attempt + 1);
+  return evaluateTest(test, attempt + 1);
 };

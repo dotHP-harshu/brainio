@@ -77,6 +77,7 @@ Evaluation Logic Guidelines:
 Schema:
 {
   "title": "string",
+  "difficulty": "Hard" | "Easy" | "Medium",
   "result": "Passed" | "Failed",
   "resultLabel": "Excellent" | "Good" | "Average" | "Poor",
   "correctAnswers": "number",

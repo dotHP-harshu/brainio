@@ -13,6 +13,17 @@ export const resultValidator = (result: any): boolean => {
   )
     return false;
 
+  // validate difficulty
+  if (
+    !resultObject.difficulty ||
+    typeof resultObject.difficulty !== "string" ||
+    resultObject.difficulty.trim() === "" ||
+    (resultObject.difficulty !== "Easy" &&
+      resultObject.difficulty !== "Medium" &&
+      resultObject.difficulty !== "Hard")
+  )
+    return false;
+
   // validate result
   if (
     !resultObject.result ||

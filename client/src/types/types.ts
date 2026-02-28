@@ -115,6 +115,7 @@ export interface TestResultInterface {
   title: string;
   result: "Passed" | "Failed";
   resultLabel: "Excellent" | "Good" | "Average" | "Poor";
+  difficulty: TestDifficultyTypes;
   correctAnswers: number;
   totalQuestions: number;
   timeSpent: number; // in seconds
@@ -137,12 +138,12 @@ export interface completedTestInterface {
   aiInsight: string;
   correctAnswers: number;
   createdAt: Date;
+  difficulty: TestDifficultyTypes;
   result: string;
   resultLabel: string;
   timeSpent: number;
   title: string;
   totalQuestions: string;
-  type: string;
   updatedAt: Date;
   userId: string;
   __v: number;

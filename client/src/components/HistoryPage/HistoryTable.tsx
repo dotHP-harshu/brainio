@@ -15,7 +15,7 @@ function HistoryTable({ items, onReview, onRetake }: HistoryTableProps) {
         <thead>
           <tr className="border-b-2 border-text">
             <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide">TOPIC NAME</th>
-            <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">TYPE</th>
+            <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">DIFFICULTY</th>
             <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">SCORE</th>
             <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">DATE</th>
             <th className="p-4 max-sm:p-2 max-sm:text-xs text-left text-sm font-bold uppercase tracking-wide max-sm:hidden">DURATION</th>

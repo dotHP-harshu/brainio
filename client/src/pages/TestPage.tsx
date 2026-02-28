@@ -97,7 +97,7 @@ function TestPage() {
       setTestResult(result);
       // save result if user is logged in
       if (user) {
-        const { error } = await setTestApi(user._id, result.title, result.result, result.resultLabel, result.correctAnswers, result.totalQuestions, "mcq", result.timeSpent, result.accuracyRate, result.aiInsight);
+        const { error } = await setTestApi(user._id, result.title, result.result, result.resultLabel, result.correctAnswers, result.totalQuestions, result.difficulty, result.timeSpent, result.accuracyRate, result.aiInsight);
         if (error) {
           return console.log(error)
         }

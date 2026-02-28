@@ -24,14 +24,14 @@ export type GeneratedTestInterface = {
   questions: (ObjectiveQuestion | SubjectiveQuestion)[];
 };
 
-
 export type ResultInterface = {
-  title:string;
-  result: "Passed" | "Failed",
-  resultLabel:"Excellent" | "Good" | "Average" | "Poor";
-  totalQuestions:number;
-  correctAnswers:number;
-  timeSpent:number;
-  accuracyRate:number
-  aiInsight:string
-}
+  title: string;
+  result: "Passed" | "Failed";
+  difficulty: "Easy" | "Medium" | "Hard";
+  resultLabel: "Excellent" | "Good" | "Average" | "Poor";
+  totalQuestions: number;
+  correctAnswers: number;
+  timeSpent: number;
+  accuracyRate: number;
+  aiInsight: string;
+};

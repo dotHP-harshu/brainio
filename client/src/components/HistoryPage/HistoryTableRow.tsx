@@ -9,7 +9,7 @@ interface HistoryTableRowProps {
   onRetake: (id: string) => void;
 }
 
-function HistoryTableRow({ item, onReview, onRetake }: HistoryTableRowProps) {
+function  HistoryTableRow({ item, onReview, onRetake }: HistoryTableRowProps) {
 
   return (
     <tr className="border-t-2 border-text">
@@ -17,7 +17,7 @@ function HistoryTableRow({ item, onReview, onRetake }: HistoryTableRowProps) {
         <span className="font-bold max-sm:text-xs">{item.title}</span>
       </td>
       <td className="p-4 max-sm:p-2 max-sm:hidden">
-        <span className="font-bold max-sm:text-xs">{item.type}</span>
+        <span className="font-bold max-sm:text-xs">{item.difficulty}</span>
       </td>
       <td className="p-4 max-sm:p-2">
         <ScoreBadge score={item.accuracyRate} />
