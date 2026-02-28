@@ -53,7 +53,10 @@ const request = async <T>(
   }
 };
 
+
+// requests
 export const logoutApi = () => request("GET", "/auth/logout");
+export const changePhotoApi = (url:string) => request("POST", "/auth/changePhoto", {photoUrl:url});
 export const myDetailApi = () => request<UserInterFace>("GET", "/auth/me");
 export const generateTestApi = (prompt: PromptInterface) =>
   request("POST", "/tests/generate", { prompt });

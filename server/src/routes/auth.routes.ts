@@ -5,7 +5,7 @@ import config from "../config/config";
 import { sendError, sendResponse } from "../utils/responseFormatter";
 import authMiddleware from "../middleware/auth.middle";
 import userModel from "../models/user.model";
-import { logoutController, meController } from "../controllers/auth.controller";
+import { changePhotoController, logoutController, meController } from "../controllers/auth.controller";
 const AuthRouter = express.Router();
 
 AuthRouter.get(
@@ -25,6 +25,7 @@ AuthRouter.get(
 );
 
 AuthRouter.get("/me", authMiddleware, meController);
+AuthRouter.post("/changePhoto", authMiddleware, changePhotoController)
 
 AuthRouter.get("/logout", logoutController );
 export default AuthRouter;

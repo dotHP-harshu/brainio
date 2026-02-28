@@ -29,7 +29,7 @@ passport.use(
             googleId: profile.id,
             userName: profile.displayName,
             email,
-            photo: profile.photos?.[0].value,
+            photo: "https://res.cloudinary.com/dzzlezrnw/image/upload/v1772273504/default-profile_vselxi.png",
           });
           let history = await historyModel.create({ userId: newUser._id });
           return cb(null, newUser);
