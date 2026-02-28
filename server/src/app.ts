@@ -34,10 +34,12 @@ app.use(passport.session());
 // Routes Importations
 import AuthRouter from "./routes/auth.routes";
 import TestRouter from "./routes/test.route";
+import HistoryRouter from "./routes/history.routes";
 
 // Route Declaration
 app.use("/auth", AuthRouter);
 app.use("/tests", TestRouter);
+app.use("/history", HistoryRouter)
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello from the Brainio Server.");
