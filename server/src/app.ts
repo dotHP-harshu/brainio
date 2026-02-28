@@ -12,6 +12,12 @@ app.use(
     secret: config.SESSION_SECRET,
     saveUninitialized: true,
     resave: false,
+    cookie:{
+      maxAge:7*24*60*60*1000,
+      sameSite:"strict",
+      httpOnly:true,
+      secure:false
+    }
   }),
 );
 

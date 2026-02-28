@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
 interface UserInterface {
+  _id:string
   googleId:string
   email:string
   userName:string
   photo:string
+  createdAt: Date;
 }
 
 const userSchema = new mongoose.Schema(

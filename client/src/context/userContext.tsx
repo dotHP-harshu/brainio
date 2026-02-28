@@ -15,6 +15,7 @@ export default function UserProvider({ children }: React.PropsWithChildren) {
     if (error) {
       setUser(null);
     } else {
+      console.log(data)
       setUser(data as UserInterFace);
     }
     setLoading(false);

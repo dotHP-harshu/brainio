@@ -2,6 +2,8 @@ export type TestStyleType = "Q&A" | "MCQ";
 export type TestDifficultyTypes = "Hard" | "Easy" | "Medium";
 
 export interface UserInterFace {
+  _id:string;
+  createdAt: Date | string;
   email: string;
   userName: string;
   photos: string;

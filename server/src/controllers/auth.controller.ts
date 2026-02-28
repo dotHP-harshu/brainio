@@ -6,6 +6,8 @@ import config from "../config/config";
 const meController = (req: Request, res: Response) => {
   const requestUser = req.user as UserInterface;
   const me = {
+    _id:requestUser._id,
+    createAt : requestUser.createdAt,
     email: requestUser.email,
     photos: requestUser.photo,
     userName: requestUser.userName,
