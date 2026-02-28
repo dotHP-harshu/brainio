@@ -2,6 +2,7 @@ import passport from "passport";
 import Oauth20, { Profile } from "passport-google-oauth20";
 import config from "./config";
 import userModel from "../models/user.model";
+import historyModel from "../models/history.model";
 const GoogleStrategy = Oauth20.Strategy;
 
 passport.use(
@@ -30,6 +31,7 @@ passport.use(
             email,
             photo: profile.photos?.[0].value,
           });
+          let history = await historyModel.create({ userId: newUser._id });
           return cb(null, newUser);
         }
         return cb(null, user);
