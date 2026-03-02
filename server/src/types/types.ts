@@ -35,3 +35,9 @@ export type ResultInterface = {
   accuracyRate: number;
   aiInsight: string;
 };
+
+export interface DeleteUserModelInterface{
+  _id:string,
+  email:string
+  userName:string
+}

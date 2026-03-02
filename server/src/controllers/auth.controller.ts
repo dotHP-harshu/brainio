@@ -2,8 +2,12 @@ import { Request, Response } from "express";
 import userModel, { UserInterface } from "../models/user.model";
 import { sendError, sendResponse } from "../utils/responseFormatter";
 import config from "../config/config";
+import historyModel from "../models/history.model";
+import completedTestModel from "../models/completedTest.model";
+import deletedUserModel from "../models/deletedUser.model";
+import { revokeGoogleAccess } from "../utils/revokeGoogle";
 
-const meController = (req: Request, res: Response) => {
+export const meController = (req: Request, res: Response) => {
   const requestUser = req.user as UserInterface;
   const me = {
     _id: requestUser._id,
@@ -48,15 +52,13 @@ export const changePhotoController = async (req: Request, res: Response) => {
   }
 };
 
-const logoutController = (req: Request, res: Response) => {
+export const logoutController = (req: Request, res: Response) => {
   req.logout((err) => {
     if (err) {
-      const error = err as Error;
       return sendError(res, "Error on logout", false, 500);
     }
     req.session.destroy((err) => {
       if (err) {
-        const error = err as Error;
         return sendError(res, "Error on destroying session", false, 500);
       }
       res.clearCookie("connect.sid");
@@ -67,4 +69,40 @@ const logoutController = (req: Request, res: Response) => {
   });
 };
 
-export { meController, logoutController };
+export const deleteUserController = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as UserInterface;
+    if (!user) {
+      return sendError(res, "You are not authenticated.", false, 400);
+    }
+    const savedUser = await userModel.findOneAndDelete({ email: user.email });
+    if (!savedUser) {
+      return sendError(res, "user not found", false, 400);
+    }
+    revokeGoogleAccess(user.accessToken);
+    const savedHistory = await historyModel.findOneAndDelete({
+      userId: savedUser._id,
+    });
+    const savedTests = await completedTestModel.deleteMany({
+      userId: savedUser._id,
+    });
+    const deletedUser = await deletedUserModel.create({
+      email: savedUser.email,
+      userName: savedUser.userName,
+    });
+
+    res.redirect("/auth/logout");
+    // sendResponse(
+    //   res,
+    //   { user: savedUser, history: savedHistory, tests: savedTests },
+    //   "User account is deleted successfully.",
+    //   true,
+    //   200,
+    // );
+  } catch (error) {
+    if (error instanceof Error) {
+      return sendError(res, error.message, false, 400);
+    }
+    return sendError(res, "Error on the delete user controller.", false, 400);
+  }
+};

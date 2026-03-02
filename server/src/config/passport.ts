@@ -26,6 +26,7 @@ passport.use(
         const user = await userModel.findOne({ googleId: profile.id });
         if (!user) {
           let newUser = await userModel.create({
+            accessToken,
             googleId: profile.id,
             userName: profile.displayName,
             email,
