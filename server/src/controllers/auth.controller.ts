@@ -80,11 +80,12 @@ export const deleteUserController = async (req: Request, res: Response) => {
     if (!user) {
       return sendError(res, "You are not authenticated.", false, 400);
     }
+    revokeGoogleAccess(user.accessToken);
     const savedUser = await userModel.findOneAndDelete({ email: user.email });
     if (!savedUser) {
       return sendError(res, "user not found", false, 400);
     }
-    revokeGoogleAccess(user.accessToken);
+
     const savedHistory = await historyModel.findOneAndDelete({
       userId: savedUser._id,
     });
@@ -96,7 +97,7 @@ export const deleteUserController = async (req: Request, res: Response) => {
       userName: savedUser.userName,
     });
 
-    res.redirect("/auth/logout");
+    res.redirect(`${config.CLIENT_URL}/login`);
     // sendResponse(
     //   res,
     //   { user: savedUser, history: savedHistory, tests: savedTests },
@@ -105,6 +106,7 @@ export const deleteUserController = async (req: Request, res: Response) => {
     //   200,
     // );
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       return sendError(res, error.message, false, 400);
     }

@@ -13,24 +13,29 @@ function DeleteAccModal({ userName, hideModal }: DeleteAccModalProps) {
   const [userNameMisMatch, setUserNameMisMatch] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deletionError, setDeletionError] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleDeletion = async () => {
     setDeletionError("");
     setUserNameMisMatch(false);
-    setDeleting(true);
+
+    // username validation
     if (userName !== userNameTyped) {
+      setUserNameMisMatch(true);
+      return;
+    }
+
+    try {
+      setDeleting(true);
+
+      await deleteAccountApi();
+
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+      setDeletionError("Failed to delete account");
+    } finally {
       setDeleting(false);
-      return setUserNameMisMatch(true);
-    } else if (userName === userNameTyped) {
-      const { data, error } = await deleteAccountApi();
-      if (error) {
-        setDeletionError(error);
-        return setDeleting(false);
-      } else if (data) {
-        setDeleting(false);
-        navigate ("/login")
-      }
     }
   };
 
@@ -63,7 +68,10 @@ function DeleteAccModal({ userName, hideModal }: DeleteAccModalProps) {
           </p>
           <input
             value={userNameTyped}
-            onChange={(e) =>{setUserNameMisMatch(false); setUserNameTyped(e.target.value)}}
+            onChange={(e) => {
+              setUserNameMisMatch(false);
+              setUserNameTyped(e.target.value);
+            }}
             type="text"
             placeholder="Enter your user name"
             className={`border-2 w-full px-4 py-0.5 outline-none focus:shadow-none transition-shadow duration-300 ${userNameMisMatch ? "border-error shadow-none text-error" : "border-text shadow-[2px_2px_0px_var(--color-text)]"}`}
