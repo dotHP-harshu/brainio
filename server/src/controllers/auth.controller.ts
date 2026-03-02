@@ -52,21 +52,26 @@ export const changePhotoController = async (req: Request, res: Response) => {
   }
 };
 
-export const logoutController = (req: Request, res: Response) => {
-  req.logout((err) => {
-    if (err) {
-      return sendError(res, "Error on logout", false, 500);
-    }
-    req.session.destroy((err) => {
+export const logoutController = async (req: Request, res: Response) => {
+  try {
+    req.logout((err) => {
       if (err) {
-        return sendError(res, "Error on destroying session", false, 500);
+        return sendError(res, "Logout failed", false, 500);
       }
-      res.clearCookie("connect.sid");
 
-      //   return sendResponse(res, null, "Logged out successfully", true, 200);
-      res.redirect(`${config.CLIENT_URL}/login`);
+      req.session.destroy((err) => {
+        if (err) {
+          return sendError(res, "Session destroy failed", false, 500);
+        }
+
+        res.clearCookie("connect.sid", { path: "/" });
+
+        res.redirect(`${config.CLIENT_URL}/login`);
+      });
     });
-  });
+  } catch (error) {
+    return sendError(res, "Logout error", false, 500);
+  }
 };
 
 export const deleteUserController = async (req: Request, res: Response) => {

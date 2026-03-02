@@ -1,14 +1,15 @@
-import { User } from "lucide-react";
+import { KeyRound, User } from "lucide-react";
 import { useUser } from "../hooks/useUser";
 import { useState } from "react";
 import EditPhoto from "../components/Profile/EditPhoto";
 import DeleteAccModal from "../components/DeleteAccModal";
+import AccountManagement from "../components/Profile/AccountManagement";
 
 function ProfilePage() {
   const { user } = useUser()!;
   if (!user) return;
   const [editPhoto, setEditPhoto] = useState(false);
-  const [showingDeleteModal , setShowingDeleteModal ] = useState(false)
+  const [showingDeleteModal, setShowingDeleteModal] = useState(false);
 
   return (
     <main>
@@ -18,9 +19,12 @@ function ProfilePage() {
           hideEditPhoto={() => setEditPhoto(false)}
         />
       )}
-      {
-        showingDeleteModal && <DeleteAccModal userName={user.userName} hideModal={()=>setShowingDeleteModal(false)}/>
-      }
+      {showingDeleteModal && (
+        <DeleteAccModal
+          userName={user.userName}
+          hideModal={() => setShowingDeleteModal(false)}
+        />
+      )}
       <div className="w-full max-w-3xl mx-auto p-4 mt-10">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight">
@@ -74,8 +78,19 @@ function ProfilePage() {
         </div>
         {/* profile information */}
       </div>
+      <div className="w-full max-w-3xl mx-auto p-4">
+        <div className="box box-shadow w-full space-y-2 mt-10">
+          <div className="bg-secondary/50 border-b-2 border-text flex gap-2 items-center p-6">
+            <KeyRound />
+            <span className="text-xl font-semibold tracking-tight">
+              Account
+            </span>
+          </div>
+          <AccountManagement />
+        </div>
+      </div>
       {/* danger zone */}
-      <div className="w-full max-w-3xl mx-auto p-4 mt-10">
+      <div className="w-full max-w-3xl mx-auto p-4">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight">Danger Zone</h2>
         </div>
@@ -85,7 +100,12 @@ function ProfilePage() {
             Deleting your account is permanent. This will erase all your brainio
             account details and tests history across all devices.
           </p>
-          <button onClick={()=>setShowingDeleteModal(true)} className="outline-none border-error border-2 shadow-[2px_2px_0px_var(--color-error)] px-4 py-1 cursor-pointer text-error hover:bg-error hover:text-white hover:shadow-none transition-all duration-300">Delete My Brainio Account</button>
+          <button
+            onClick={() => setShowingDeleteModal(true)}
+            className="outline-none border-error border-2 shadow-[2px_2px_0px_var(--color-error)] px-4 py-1 cursor-pointer text-error hover:bg-error hover:text-white hover:shadow-none transition-all duration-300"
+          >
+            Delete My Brainio Account
+          </button>
         </div>
       </div>
     </main>

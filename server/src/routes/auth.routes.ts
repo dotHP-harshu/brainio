@@ -8,7 +8,7 @@ const AuthRouter = express.Router();
 
 AuthRouter.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] }),
+  passport.authenticate("google", { scope: ["profile", "email"], accessType:"offline", prompt:"consent" }),
 );
 
 AuthRouter.get(
@@ -24,8 +24,8 @@ AuthRouter.get(
 
 AuthRouter.get("/me", authMiddleware, meController);
 AuthRouter.post("/changePhoto", authMiddleware, changePhotoController)
-AuthRouter.get("/logout", logoutController );
-AuthRouter.get("/delete", deleteUserController)
+AuthRouter.get("/logout", authMiddleware, logoutController );
+AuthRouter.get("/delete",authMiddleware, deleteUserController)
 
 
 
