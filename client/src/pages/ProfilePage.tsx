@@ -4,6 +4,7 @@ import { useState } from "react";
 import EditPhoto from "../components/Profile/EditPhoto";
 import DeleteAccModal from "../components/DeleteAccModal";
 import AccountManagement from "../components/Profile/AccountManagement";
+import Preference from "../components/Profile/Preference";
 
 function ProfilePage() {
   const { user } = useUser()!;
@@ -83,10 +84,14 @@ function ProfilePage() {
           <div className="bg-secondary/50 border-b-2 border-text flex gap-2 items-center p-6">
             <KeyRound />
             <span className="text-xl font-semibold tracking-tight">
-              Account
+              Account & Preference
             </span>
           </div>
-          <AccountManagement />
+          <div className="p-6 space-y-6">
+            <Preference />
+            <hr />
+            <AccountManagement />
+          </div>
         </div>
       </div>
       {/* danger zone */}
@@ -95,7 +100,7 @@ function ProfilePage() {
           <h2 className="text-3xl font-semibold tracking-tight">Danger Zone</h2>
         </div>
         <div className="mt-10 border-2 border-error p-4 shadow-[5px_5px_0px_var(--color-error)] space-y-6">
-          <h3 className="text-2xl font-extrabold text-error">Danger Zone</h3>
+          <h3 className="text-2xl font-extrabold text-error">Delete Account</h3>
           <p className="text-base text-error">
             Deleting your account is permanent. This will erase all your brainio
             account details and tests history across all devices.

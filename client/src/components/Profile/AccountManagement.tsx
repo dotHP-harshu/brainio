@@ -33,7 +33,7 @@ function AccountManagement() {
       )}
 
       {/* main */}
-      <div className="p-6 space-y-6">
+      
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center gap-4 ">
             <span className="aspect-square h-full flex items-center justify-center p-2 border border-text">
@@ -85,7 +85,6 @@ function AccountManagement() {
             "Logout"
           )}
         </button>
-      </div>
     </>
   );
 }

@@ -2,7 +2,7 @@ export type TestStyleType = "Q&A" | "MCQ";
 export type TestDifficultyTypes = "Hard" | "Easy" | "Medium";
 
 export interface UserInterFace {
-  _id:string;
+  _id: string;
   createdAt: Date | string;
   email: string;
   userName: string;
@@ -150,9 +150,22 @@ export interface completedTestInterface {
   _id: string;
 }
 
-export interface completedTestsHistoryInterface{
+export interface completedTestsHistoryInterface {
   tests: completedTestInterface[];
-  page:number;
-  limit:number;
-  totalPage:number
+  page: number;
+  limit: number;
+  totalPage: number;
+}
+
+export interface ThemeInterface {
+  id: string;
+  name: string;
+  colors: {
+    primary: string;
+    secondary: string;
+  };
+}
+export interface ThemeContextInterface{
+    theme: ThemeInterface
+    applyTheme :(themeId:string)=>void
 }
