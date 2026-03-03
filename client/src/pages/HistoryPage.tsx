@@ -109,6 +109,7 @@ function HistoryPage() {
     useState<HistoryStatsInterface | null>(null);
 
   const { user } = useUser();
+
   const navigate = useNavigate()
 
   const [testsHistory, setTestsHistory] =
@@ -131,7 +132,7 @@ function HistoryPage() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    getTests(user?._id, testsLimit, page, searchQuery);
+    getTests(user.id , testsLimit, page, searchQuery);
   };
 
   // get tests
@@ -149,10 +150,8 @@ function HistoryPage() {
       search,
     );
     if (error) {
-      console.log(error);
       return setIsLoadingTests(false);
     } else if (data) {
-      console.log(data);
       const testsHistory = data as completedTestsHistoryInterface;
       setTestsHistory(testsHistory);
       setIsLoadingTests(false);
@@ -163,10 +162,8 @@ function HistoryPage() {
   const getHistoryStates = async (userId: string) => {
     const { data, error } = await getHistoryStateApi(userId);
     if (error) {
-      console.log(error);
       return setIsLoadingPage(false);
     } else if (data) {
-      console.log(data);
       const states = data as {
         completedTests: string[];
         createdAt: string;

@@ -11,7 +11,6 @@ import type {
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
-console.log(serverUrl);
 
 const api = axios.create({
   baseURL: serverUrl,
@@ -23,7 +22,6 @@ const request = async <T>(
   path: string,
   data: any = null,
 ): Promise<ResponseInterface<T>> => {
-  console.log(path, method);
   try {
     const res: AxiosResponse<ServerResponseInterface<T>> = await api({
       method,
@@ -31,7 +29,6 @@ const request = async <T>(
       data,
     });
     if (res.data.success === false) {
-      console.log(res.data)
       return { data: null, error: res.data.message };
     }
     return { data: res.data.data, error: null };

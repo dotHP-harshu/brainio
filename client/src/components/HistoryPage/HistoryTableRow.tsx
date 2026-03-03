@@ -1,4 +1,3 @@
-import type { HistoryItem } from '../../pages/HistoryPage';
 import ScoreBadge from './ScoreBadge';
 import { formatDate, formatDuration } from '../../utils/historyFormatters';
 import type { completedTestInterface } from '../../types/types';

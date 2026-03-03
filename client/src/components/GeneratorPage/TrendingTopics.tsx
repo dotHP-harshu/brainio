@@ -26,7 +26,6 @@ const TRENDING_TOPICS: TrendingTopicInterface[] = [
 
 function TrendingTopics() {
   const {
-    prompt,
     changeDifficulty,
     changeQuestionCount,
     changeTestType,
@@ -39,7 +38,6 @@ function TrendingTopics() {
     changeTestType(topic.testType);
 
     // handle api call
-    console.log(prompt);
   };
   return (
     <section>

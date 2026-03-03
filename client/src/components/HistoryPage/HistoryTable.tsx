@@ -1,4 +1,3 @@
-import type { HistoryItem } from '../../pages/HistoryPage';
 import type { completedTestInterface } from '../../types/types';
 import HistoryTableRow from './HistoryTableRow';
 
