@@ -5,6 +5,7 @@ import EditPhoto from "../components/Profile/EditPhoto";
 import DeleteAccModal from "../components/DeleteAccModal";
 import AccountManagement from "../components/Profile/AccountManagement";
 import Preference from "../components/Profile/Preference";
+import ProfileNavigations from "../components/Profile/ProfileNavigations";
 
 function ProfilePage() {
   const { user } = useUser()!;
@@ -27,6 +28,7 @@ function ProfilePage() {
         />
       )}
       <div className="w-full max-w-3xl mx-auto p-4 mt-10">
+      <ProfileNavigations/>
         <div>
           <h2 className="text-3xl font-semibold tracking-tight">
             User Settings
