@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { sendError, sendResponse } from "../utils/responseFormatter";
 import historyModel from "../models/history.model";
 import completedTestModel from "../models/completedTest.model";
+import { UserInterface } from "../models/user.model";
 
 // GET REQUESTs
 export const getHistory = async (req: Request, res: Response) => {
@@ -23,7 +24,8 @@ export const getHistory = async (req: Request, res: Response) => {
 
 export const getTests = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
+    const user = req.user as UserInterface;
+    const userId = user._id;
     const { limit: limitQuery, page: pageQuery, search } = req.query;
 
     const limit = limitQuery ? Number(limitQuery) : 5;
@@ -59,7 +61,7 @@ export const getTests = async (req: Request, res: Response) => {
       },
       "Get tests success fully",
       true,
-      200
+      200,
     );
 
     if (!userId) return sendError(res, "UserId not found", false, 400);
@@ -147,7 +149,7 @@ export const setTest = async (req: Request, res: Response) => {
       "Test saved successfully.",
       "Test saved successfully.",
       true,
-      200
+      200,
     );
   } catch (error) {
     if (error instanceof Error) {

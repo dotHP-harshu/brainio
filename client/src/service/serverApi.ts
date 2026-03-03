@@ -11,7 +11,6 @@ import type {
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
-
 const api = axios.create({
   baseURL: serverUrl,
   withCredentials: true,
@@ -50,10 +49,10 @@ const request = async <T>(
   }
 };
 
-
 // requests
 export const logoutApi = () => request("GET", "/auth/logout");
-export const changePhotoApi = (url:string) => request("POST", "/auth/changePhoto", {photoUrl:url});
+export const changePhotoApi = (url: string) =>
+  request("POST", "/auth/changePhoto", { photoUrl: url });
 export const myDetailApi = () => request<UserInterFace>("GET", "/auth/me");
 export const deleteAccountApi = () => request("GET", "/auth/delete");
 export const generateTestApi = (prompt: PromptInterface) =>
@@ -85,15 +84,10 @@ export const setTestApi = (
     aiInsight,
   });
 
-export const getTestsApi = (
-  userId: string,
-  limit: number,
-  page: number,
-  search: string = "",
-) =>
+export const getTestsApi = (limit: number, page: number, search: string = "") =>
   request(
     "GET",
-    `/history/get/tests/${userId}?limit=${limit}&page=${page}&search=${search}`,
+    `/history/get/tests/?limit=${limit}&page=${page}&search=${search}`,
   );
 
 export const getHistoryStateApi = (userId: string) =>

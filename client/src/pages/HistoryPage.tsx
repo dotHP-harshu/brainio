@@ -102,7 +102,8 @@ export interface HistoryPageData {
 function HistoryPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [testsLimit, setTestLimit] = useState(5);
+  // const [testsLimit, setTestLimit] = useState(5);
+  const testsLimit = 5
   const [isLoadingTests, setIsLoadingTests] = useState(true);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [historyState, setHistoryState] =
@@ -132,19 +133,17 @@ function HistoryPage() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    getTests(user.id , testsLimit, page, searchQuery);
+    getTests( testsLimit, page, searchQuery);
   };
 
   // get tests
   const getTests = async (
-    userId: string,
     testsLimit: number,
     currentPage: number,
     search: string = "",
   ) => {
     setIsLoadingTests(true);
     const { error, data } = await getTestsApi(
-      userId,
       testsLimit,
       currentPage,
       search,
@@ -189,7 +188,7 @@ function HistoryPage() {
 
   useEffect(() => {
     if (!user) return;
-    getTests(user._id, testsLimit, currentPage, searchQuery);
+    getTests( testsLimit, currentPage, searchQuery);
   }, [user, currentPage, searchQuery, testsLimit]);
 
   // optional rendering
@@ -226,7 +225,7 @@ function HistoryPage() {
                 <button
                   onClick={() => {
                     setCurrentPage(1);
-                    getTests(user?._id, testsLimit, 1, searchQuery);
+                    getTests( testsLimit, 1, searchQuery);
                   }}
                   className="bg-primary box box-shadow p-2 flex justify-center items-center gap-2 font-sans font-semibold uppercase cursor-pointer"
                 >
