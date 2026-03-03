@@ -1,4 +1,4 @@
-import { CheckCircle, KeyRound, Loader2 } from "lucide-react";
+import { CheckCircle, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { logoutApi } from "../../service/serverApi";
 import ErrorCompo from "../ErrorCompo";

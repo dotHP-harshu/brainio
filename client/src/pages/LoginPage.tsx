@@ -2,7 +2,6 @@ import { Lock, ShieldCheck } from "lucide-react";
 
 function LoginPage() {
   const handleLogin =()=>{
-    const loginUrl = import.meta.env.VITE_SERVER_URL
     window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google`
   }
   return (

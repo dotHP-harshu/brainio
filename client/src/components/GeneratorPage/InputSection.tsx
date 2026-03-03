@@ -1,6 +1,5 @@
 import { ZapIcon } from "lucide-react";
 import { usePromptContext } from "../../hooks/usePromptContext";
-import { generateTestApi } from "../../service/serverApi";
 
 const MAX_INPUT_WORDS = 100;
 
@@ -9,7 +8,7 @@ interface InputSectionProps {
 }
 
 function InputSection({generateTest}: InputSectionProps) {
-  const { prompt, changeUserQuery, resetPrompt } = usePromptContext();
+  const { prompt, changeUserQuery } = usePromptContext();
 
   // const errorBox = useRef<HTMLDivElement>(null);
 
