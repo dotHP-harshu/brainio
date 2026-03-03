@@ -10,14 +10,16 @@ import { useTestContext } from "../context/testContext";
 import type { TestDataInterface } from "../types/types";
 import { useNavigate } from "react-router-dom";
 import ErrorCompo from "../components/ErrorCompo";
+import LoginPrompt from "../components/LoginPrompt";
 
 function GeneratorPage() {
   const [generating, setGenerating] = useState<boolean>(false);
   const [testGenerationError, setTestGenerationError] = useState<string>("");
-  const { prompt, resetPrompt } = usePromptContext()
+  const { prompt, resetPrompt } = usePromptContext();
   const navigate = useNavigate();
+  const [isShowingLoginPrompt, setIsShowingLoginPrompt] = useState(true);
 
-  const { setTest } = useTestContext()
+  const { setTest } = useTestContext();
 
   const generateTest = async () => {
     setTestGenerationError("");
@@ -32,14 +34,12 @@ function GeneratorPage() {
     }
     if (data) {
       console.log(data);
-      setTest(data as TestDataInterface)
+      setTest(data as TestDataInterface);
       navigate("/test");
       resetPrompt();
       return setGenerating(false);
     }
   };
-
-
 
   if (generating) {
     return (
@@ -51,8 +51,17 @@ function GeneratorPage() {
 
   return (
     <main>
-      {testGenerationError.trim() !== "" &&
-        <ErrorCompo errorMsg={testGenerationError} hideError={() => setTestGenerationError("")} retryFunc={generateTest} />}
+      {isShowingLoginPrompt &&
+        sessionStorage.getItem("Brainio_login_prompt") !== "shown" && (
+          <LoginPrompt hidePrompt={() => setIsShowingLoginPrompt(false)} />
+        )}
+      {testGenerationError.trim() !== "" && (
+        <ErrorCompo
+          errorMsg={testGenerationError}
+          hideError={() => setTestGenerationError("")}
+          retryFunc={generateTest}
+        />
+      )}
       {/* main Heading */}
       <div className="max-w-5xl w-full p-6 mx-auto">
         <h2 className="text-4xl font-bold font-sans text-center">

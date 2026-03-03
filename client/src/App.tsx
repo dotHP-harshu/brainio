@@ -10,6 +10,7 @@ import { TestContextProvider } from "./context/testContext";
 import ResultPage from "./pages/ResultPage";
 import { ResultContextProvider } from "./context/resultContext";
 import HistoryPage from "./pages/HistoryPage";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const Router = createBrowserRouter([
@@ -50,6 +51,10 @@ function App() {
         }
       ],
     },
+    {
+      path:"*",
+      element:<PageNotFound/>
+    }
   ]);
 
   return (
