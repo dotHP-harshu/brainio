@@ -9,7 +9,7 @@ function Preference() {
   return (
     <>
     <h4 className="capitalize font-bold">preference <small>(saved locally)</small></h4>
-    <div className=" box box-shadow p-4 grid grid-cols-4 w-fit gap-4">
+    <div className=" box box-shadow p-4 grid grid-cols-4 w-fit gap-4 max-sm:grid-cols-2">
 
 {
     themes.map((theme)=>(

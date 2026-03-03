@@ -55,7 +55,7 @@
   --color-primary: #7c3aed;
   --color-secondary: #ec4899;
 }
-:root[data-theme="purple-premium"] {
+:root[data-theme="ocean"] {
   --color-primary: #2563eb;
   --color-secondary: #14b8a6;
 }

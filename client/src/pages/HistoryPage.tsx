@@ -10,8 +10,9 @@ import type {
   completedTestsHistoryInterface,
   HistoryStatsInterface,
 } from "../types/types";
-import { Search } from "lucide-react";
+import { ArrowLeft, Search } from "lucide-react";
 import { useUser } from "../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 export type TestType = "MCQ" | "Q&A";
 export type TopicIcon = "beaker" | "book" | "calculator";
@@ -107,10 +108,8 @@ function HistoryPage() {
   const [historyState, setHistoryState] =
     useState<HistoryStatsInterface | null>(null);
 
-
-  const { user } = useUser()
-
-
+  const { user } = useUser();
+  const navigate = useNavigate()
 
   const [testsHistory, setTestsHistory] =
     useState<completedTestsHistoryInterface | null>(null);
@@ -134,9 +133,6 @@ function HistoryPage() {
     setCurrentPage(page);
     getTests(user?._id, testsLimit, page, searchQuery);
   };
-
-
-
 
   // get tests
   const getTests = async (
@@ -165,9 +161,7 @@ function HistoryPage() {
 
   // get states
   const getHistoryStates = async (userId: string) => {
-    const { data, error } = await getHistoryStateApi(
-      userId,
-    );
+    const { data, error } = await getHistoryStateApi(userId);
     if (error) {
       console.log(error);
       return setIsLoadingPage(false);
@@ -192,12 +186,12 @@ function HistoryPage() {
   };
 
   useEffect(() => {
-    if (!user) return
+    if (!user) return;
     getHistoryStates(user._id);
   }, [user]);
 
   useEffect(() => {
-    if (!user) return
+    if (!user) return;
     getTests(user._id, testsLimit, currentPage, searchQuery);
   }, [user, currentPage, searchQuery, testsLimit]);
 
@@ -212,10 +206,18 @@ function HistoryPage() {
 
   return (
     <div className="min-h-screen">
+      <button onClick={()=>navigate("/profile", {replace:true})} className="outline-none hover:underline text-lg my-4 flex justify-center items-center text-text-muted hover:text-text transition-colors duration-300 cursor-pointer ml-4">
+        <span>
+          <ArrowLeft />
+        </span>
+        <span>back to profile</span>
+      </button>
       {historyState && (
         <main className="max-w-7xl mx-auto px-6 py-8">
           {/* Page Title */}
-          <h1 className="text-5xl font-bold mb-8">YOUR TEST HISTORY</h1>
+          <h1 className="text-5xl font-bold mb-8 max-sm:text-2xl">
+            YOUR TEST HISTORY
+          </h1>
 
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -239,8 +241,9 @@ function HistoryPage() {
               </div>
 
               {isLoadingTests && <div>Loading tests...</div>}
-              {!isLoadingTests && testsHistory && (
-                testsHistory.tests.length === 0 ? (
+              {!isLoadingTests &&
+                testsHistory &&
+                (testsHistory.tests.length === 0 ? (
                   <div className="flex justify-center items-center w-full ">
                     <div className="flex flex-col justify-center items-center">
                       <h2 className="text-2xl font-bold">No tests found</h2>
@@ -248,7 +251,11 @@ function HistoryPage() {
                         You have not taken any tests yet.
                       </p>
                       <p className="text-lg font-medium">
-                        Click <a href="/generator" className="text-primary ">here</a> to take a test
+                        Click{" "}
+                        <a href="/generator" className="text-primary ">
+                          here
+                        </a>{" "}
+                        to take a test
                       </p>
                     </div>
                   </div>
@@ -265,8 +272,7 @@ function HistoryPage() {
                       onPageChange={handlePageChange}
                     />
                   </>
-                )
-              )}
+                ))}
             </div>
 
             {/* Right Column - Stats and Pro Tip */}

@@ -42,7 +42,7 @@ const ResultPage = () => {
             <div className="box box-shadow bg-secondary p-3 mb-4">
               <Trophy size={40} strokeWidth={2.5} />
             </div>
-            <h1 className="text-5xl md:text-6xl font-black italic tracking-tighter flex items-center gap-3 uppercase">
+            <h1 className="text-5xl md:text-6xl max-sm:text-4xl text-center font-black italic tracking-tighter flex items-center gap-3 uppercase">
               Test Completed! 🏆
             </h1>
             <div className="mt-4 box bg-[#FAD9D1] px-6 py-2 font-bold text-sm tracking-tight border-black uppercase">
@@ -59,7 +59,7 @@ const ResultPage = () => {
             <h2 className="text-[120px] font-black leading-none text-primary tracking-tighter mb-6">
               {RESULT_DATA.accuracyRate}%
             </h2>
-            <div className="bg-[#008000] text-white font-bold px-6 py-2 box border-[#000000] uppercase tracking-wider text-sm">
+            <div className="bg-gray-400 text-white font-bold px-6 py-2 box border-[#000000] uppercase tracking-wider text-sm">
               {RESULT_DATA.resultLabel} • {RESULT_DATA.result}
             </div>
           </div>
@@ -70,8 +70,7 @@ const ResultPage = () => {
               <div className="flex items-center gap-2 text-primary">
                 <CheckCircle2
                   size={18}
-                  fill="currentColor"
-                  className="text-white"
+                  className="text-primary"
                 />
                 <span className="uppercase font-bold text-[10px] tracking-widest text-black">
                   Correct Answers

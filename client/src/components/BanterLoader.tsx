@@ -1,13 +1,13 @@
 const BanterLoader = ({para}: {para: string}) => {
   return (
     <>
-      <div className="banter-loader-container">
+      <div className="banter-loader-container select-none">
         <div className="banter-loader">
           <div className="banter-loader-box"></div>
           <div className="banter-loader-box"></div>
           <div className="banter-loader-box"></div>
         </div>
-        <p className="banter-loader-text ">
+        <p className="banter-loader-text text-center ">
          {para}
           <span className="banter-loader-dots">
             <span>.</span><span>.</span><span>.</span>

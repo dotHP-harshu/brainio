@@ -2,7 +2,7 @@ import { ZapIcon } from "lucide-react";
 import { usePromptContext } from "../../hooks/usePromptContext";
 import { generateTestApi } from "../../service/serverApi";
 
-const MAX_INPUT_WORDS = 5;
+const MAX_INPUT_WORDS = 100;
 
 interface InputSectionProps {
   generateTest:()=>void

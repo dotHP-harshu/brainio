@@ -7,7 +7,7 @@ function LoginPage() {
     window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google`
   }
   return (
-    <main className="bg-secondary/20 w-full min-h-screen flex justify-center items-center">
+    <main className="bg-secondary/20 w-full min-h-screen flex justify-center items-center p-6">
       <div className="box box-shadow p-10 flex justify-center items-center flex-col max-w-lg space-y-10">
         <div className="h-fit aspect-square flex justify-center items-center bg-primary/20 p-2 rounded-full">
           <ShieldCheck className="text-primary" size={30} />
