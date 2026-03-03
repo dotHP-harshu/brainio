@@ -11,6 +11,8 @@ import type { TestDataInterface } from "../types/types";
 import { useNavigate } from "react-router-dom";
 import ErrorCompo from "../components/ErrorCompo";
 import LoginPrompt from "../components/LoginPrompt";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function GeneratorPage() {
   const [generating, setGenerating] = useState<boolean>(false);
@@ -50,6 +52,8 @@ function GeneratorPage() {
   }
 
   return (
+    <>
+    <Header/>
     <main>
       {isShowingLoginPrompt &&
         sessionStorage.getItem("Brainio_login_prompt") !== "shown" && (
@@ -96,6 +100,8 @@ function GeneratorPage() {
         {/* right side  */}
       </div>
     </main>
+    <Footer/>
+    </>
   );
 }
 

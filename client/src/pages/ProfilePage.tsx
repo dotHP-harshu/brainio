@@ -6,6 +6,7 @@ import DeleteAccModal from "../components/DeleteAccModal";
 import AccountManagement from "../components/Profile/AccountManagement";
 import Preference from "../components/Profile/Preference";
 import ProfileNavigations from "../components/Profile/ProfileNavigations";
+import Header from "../components/Header";
 
 function ProfilePage() {
   const { user } = useUser()!;
@@ -14,6 +15,8 @@ function ProfilePage() {
   const [showingDeleteModal, setShowingDeleteModal] = useState(false);
 
   return (
+    <>
+    <Header/>
     <main>
       {editPhoto && (
         <EditPhoto
@@ -116,6 +119,7 @@ function ProfilePage() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

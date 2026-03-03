@@ -11,23 +11,24 @@ import ResultPage from "./pages/ResultPage";
 import { ResultContextProvider } from "./context/resultContext";
 import HistoryPage from "./pages/HistoryPage";
 import PageNotFound from "./pages/PageNotFound";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const Router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />,
+    },
     {
       element: <LoginPage />,
       path: "/login",
     },
     {
-      element: (
-        <TestPage />
-      ),
+      element: <TestPage />,
       path: "/test",
     },
     {
-      element: (
-        <ResultPage />
-      ),
+      element: <ResultPage />,
       path: "/result",
     },
     {
@@ -47,14 +48,14 @@ function App() {
         },
         {
           path: "/history",
-          element: <HistoryPage />
-        }
+          element: <HistoryPage />,
+        },
       ],
     },
     {
-      path:"*",
-      element:<PageNotFound/>
-    }
+      path: "*",
+      element: <PageNotFound />,
+    },
   ]);
 
   return (
