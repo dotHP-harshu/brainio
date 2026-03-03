@@ -5,6 +5,10 @@
   src: url("/fonts/SpaceGrotesk-VariableFont_wght.woff");
 }
 
+/* ======================================= */
+/* base tokens                             */
+/* ======================================= */
+
 @theme {
   --color-primary: #db2777;
   --color-secondary: #facc15;
@@ -14,6 +18,48 @@
   --color-text-muted: #4b6590;
   --breakpoint-xs: 30rem;
 }
+
+/* ======================================= */
+/* theme varients                            */
+/* ======================================= */
+
+:root[data-theme="pink-gold"] {
+  --color-primary: #db2777;
+  --color-secondary: #facc15;
+}
+
+:root[data-theme="modern-dark"] {
+  --color-primary: #6366f1;
+  --color-secondary: #22c55e;
+}
+
+:root[data-theme="cyber"] {
+  --color-primary: #06b6d4;
+  --color-secondary: #a855f7;
+}
+
+:root[data-theme="calm"] {
+  --color-primary: #10b981;
+  --color-secondary: #3b82f6;
+}
+
+:root[data-theme="warm"] {
+  --color-primary: #f97316;
+  --color-secondary: #ef4444;
+}
+:root[data-theme="elegant"] {
+  --color-primary: #0ea5e9;
+  --color-secondary: #94a3b8;
+}
+:root[data-theme="purple-premium"] {
+  --color-primary: #7c3aed;
+  --color-secondary: #ec4899;
+}
+:root[data-theme="purple-premium"] {
+  --color-primary: #2563eb;
+  --color-secondary: #14b8a6;
+}
+
 body {
   font-family: "main-font";
   background-color: color-mix(in srgb, var(--color-primary), transparent 80%);

@@ -27,9 +27,10 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     localStorage.setItem("Brainio_theme", theme.id);
-    Object.entries(theme.colors).forEach(([key, value]) => {
-      document.documentElement.style.setProperty(`--color-${key}`, value);
-    });
+    document.documentElement.setAttribute("data-theme", theme.id);
+    // Object.entries(theme.colors).forEach(([key, value]) => {
+    //   document.documentElement.style.setProperty(`--color-${key}`, value);
+    // });
   }, [theme]);
 
   return (
