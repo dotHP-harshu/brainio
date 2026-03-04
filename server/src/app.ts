@@ -6,6 +6,9 @@ import expressSession from "express-session";
 import config from "./config/config";
 import cors from "cors";
 const app = express();
+import dns from "dns"
+
+dns.setServers(["1.1.1.1","8.8.8.8"])
 
 app.use(
   expressSession({
