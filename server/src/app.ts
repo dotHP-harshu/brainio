@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import express from "express";
 import passport from "./config/passport";
@@ -6,21 +6,30 @@ import expressSession from "express-session";
 import config from "./config/config";
 import cors from "cors";
 const app = express();
-import dns from "dns"
+import dns from "dns";
 
-dns.setServers(["1.1.1.1","8.8.8.8"])
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+
+let isConnectedDb = false;
+app.use(async (req: Request, res: Response, next: NextFunction) => {
+  if (!isConnectedDb) {
+    await dbConnection();
+    isConnectedDb = false;
+  }
+  next();
+});
 
 app.use(
   expressSession({
     secret: config.SESSION_SECRET,
     saveUninitialized: true,
     resave: false,
-    cookie:{
-      maxAge:7*24*60*60*1000,
-      sameSite:"strict",
-      httpOnly:false,
-      secure:true
-    }
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "strict",
+      httpOnly: false,
+      secure: true,
+    },
   }),
 );
 
@@ -44,11 +53,12 @@ app.use(passport.session());
 import AuthRouter from "./routes/auth.routes";
 import TestRouter from "./routes/test.route";
 import HistoryRouter from "./routes/history.routes";
+import dbConnection from "./config/dbConnection";
 
 // Route Declaration
 app.use("/auth", AuthRouter);
 app.use("/tests", TestRouter);
-app.use("/history", HistoryRouter)
+app.use("/history", HistoryRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello from the Brainio Server.");
