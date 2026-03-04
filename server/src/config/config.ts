@@ -8,11 +8,13 @@ interface ConfigInterface {
   CLIENT_URL:string;
   SESSION_SECRET:string;
   OPEN_ROUTER_KEY:string
+  GOOGLE_REDIRECT_URL:string
 }
 
 const config : ConfigInterface = {
   GOOGLE_CLIENT_ID:String(process.env.GOOGLE_CLIENT_ID),
   GOOGLE_CLIENT_SECRET:String(process.env.GOOGLE_CLIENT_SECRET),
+  GOOGLE_REDIRECT_URL:String(process.env.GOOGLE_REDIRECT_URL),
   PORT: Number(process.env.PORT),
   MONGOOSE_URI:String(process.env.MONGOOSE_URI),
   CLIENT_URL:String(process.env.CLIENT_URL),
