@@ -25,15 +25,17 @@ app.use(async (req, res, next) => {
   next();
 });
 
+app.set("trust proxy", 1);
+
 app.use(
   expressSession({
     secret: config.SESSION_SECRET,
-    saveUninitialized: true,
+    saveUninitialized: false,
     resave: false,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: "strict",
-      httpOnly: false,
+      sameSite: "none",
+      httpOnly: true,
       secure: true,
     },
   }),
