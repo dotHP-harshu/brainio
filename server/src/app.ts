@@ -13,28 +13,15 @@ dns.setServers(["1.1.1.1","8.8.8.8"])
 app.use(
   expressSession({
     secret: config.SESSION_SECRET,
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false,
     cookie:{
       maxAge:7*24*60*60*1000,
       sameSite:"strict",
-      httpOnly:true,
+      httpOnly:false,
       secure:true
     }
   }),
-);
-app.use(
-  expressSession({
-    secret: config.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false, // Changed to false for better practice
-    cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: "lax", 
-      httpOnly: true, // Set to true for security
-      secure: true, // Must be true on Vercel (HTTPS)
-    },
-  })
 );
 
 // body parsers
@@ -66,6 +53,5 @@ app.use("/history", HistoryRouter)
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello from the Brainio Server.");
 });
-
 
 export default app;
