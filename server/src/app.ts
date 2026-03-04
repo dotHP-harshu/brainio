@@ -10,11 +10,17 @@ import dns from "dns";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
-let isConnectedDb = false;
-app.use(async (req: Request, res: Response, next: NextFunction) => {
-  if (!isConnectedDb) {
-    await dbConnection();
-    isConnectedDb = false;
+// Ensure DB is connected before handling requests
+// In Serverless, we should await the connection but cache the promise
+let cachedDb: any = null;
+
+app.use(async (req, res, next) => {
+  if (!cachedDb) {
+    try {
+      cachedDb = await dbConnection();
+    } catch (err) {
+      return res.status(500).json({ message: "DB Connection Error" });
+    }
   }
   next();
 });
