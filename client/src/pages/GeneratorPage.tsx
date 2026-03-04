@@ -30,12 +30,10 @@ function GeneratorPage() {
     const { data, error } = await generateTestApi(prompt);
 
     if (error) {
-      console.log(error);
       setTestGenerationError(error);
       return setGenerating(false);
     }
     if (data) {
-      console.log(data);
       setTest(data as TestDataInterface);
       navigate("/test");
       resetPrompt();

@@ -67,16 +67,12 @@ function TestPage() {
     };
   }, [isStartedTest, time]);
 
-  useEffect(() => {
-    console.log("reRender");
-  }, []);
 
   const startTest = () => {
     setIsStartedTest(true);
   };
 
   const handleTestSubmit = async () => {
-    console.log("submitted");
 
     const testToSubmit: SubmitTestInterface = {
       title: TEST_DATA.testTitle,
@@ -85,7 +81,6 @@ function TestPage() {
       answers: answers,
       difficulty: TEST_DATA.difficulty
     }
-    console.log(testToSubmit)
     setSubmitting(true)
     const { data, error } = await evaluateTestApi(testToSubmit);
     if (error) {
@@ -99,7 +94,6 @@ function TestPage() {
       if (user) {
         const { error } = await setTestApi(user._id, result.title, result.result, result.resultLabel, result.correctAnswers, result.totalQuestions, result.difficulty, result.timeSpent, result.accuracyRate, result.aiInsight);
         if (error) {
-          return console.log(error)
         }
       }
       navigate("/result")
@@ -110,7 +104,6 @@ function TestPage() {
   const handleTestExit = () => {
     navigate("/generator");
     setTest(null)
-    console.log("Exitted");
   };
 
 
