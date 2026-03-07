@@ -1,5 +1,4 @@
 import { ArrowRightIcon, UserPlus } from "lucide-react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface LoginPromptProps {
@@ -9,17 +8,16 @@ function LoginPrompt({ hidePrompt }: LoginPromptProps) {
   const navigate = useNavigate();
 
   const redirectLogin = () => {
+    sessionStorage.setItem("Brainio_login_prompt", "shown");
     navigate("/login", { replace: true });
   };
-  useEffect(() => {
-   sessionStorage.setItem("Brainio_login_prompt", "shown")
-  }, [])
-  
-  
-  
+
   return (
     <div
-      onClick={hidePrompt}
+      onClick={() => {
+        sessionStorage.setItem("Brainio_login_prompt", "shown");
+        return hidePrompt();
+      }}
       className="w-screen h-screen top-0 left-0 fixed z-30 bg-white/0 backdrop-blur-md flex justify-center items-center p-4"
     >
       <div
@@ -57,7 +55,10 @@ function LoginPrompt({ hidePrompt }: LoginPromptProps) {
             <div className="flex-1 h-px bg-text-muted"></div>
           </div>
           <button
-            onClick={hidePrompt}
+            onClick={() => {
+              sessionStorage.setItem("Brainio_login_prompt", "shown");
+              return hidePrompt();
+            }}
             className="flex justify-center items-center mx-auto w-fit cursor-pointer uppercase font-bold gap-2 outline-none"
           >
             <span>continue as guest</span>

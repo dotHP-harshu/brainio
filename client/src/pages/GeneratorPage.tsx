@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BanterLoader from "../components/BanterLoader";
 import ConfigurationBox from "../components/GeneratorPage/ConfigurationBox";
 import HowItWorks from "../components/GeneratorPage/HowItWorks";
@@ -13,6 +13,7 @@ import ErrorCompo from "../components/ErrorCompo";
 import LoginPrompt from "../components/LoginPrompt";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useUser } from "../hooks/useUser";
 
 function GeneratorPage() {
   const [generating, setGenerating] = useState<boolean>(false);
@@ -20,8 +21,15 @@ function GeneratorPage() {
   const { prompt, resetPrompt } = usePromptContext();
   const navigate = useNavigate();
   const [isShowingLoginPrompt, setIsShowingLoginPrompt] = useState(true);
+  const { user } = useUser();
 
   const { setTest } = useTestContext();
+
+  useEffect(() => {
+    if (user) {
+      setIsShowingLoginPrompt(false);
+    }
+  }, [user]);
 
   const generateTest = async () => {
     setTestGenerationError("");
@@ -33,6 +41,7 @@ function GeneratorPage() {
       setTestGenerationError(error);
       return setGenerating(false);
     }
+
     if (data) {
       setTest(data as TestDataInterface);
       navigate("/test");
@@ -51,54 +60,54 @@ function GeneratorPage() {
 
   return (
     <>
-    <Header/>
-    <main>
-      {isShowingLoginPrompt &&
-        sessionStorage.getItem("Brainio_login_prompt") !== "shown" && (
-          <LoginPrompt hidePrompt={() => setIsShowingLoginPrompt(false)} />
+      <Header />
+      <main>
+        {isShowingLoginPrompt &&
+          sessionStorage.getItem("Brainio_login_prompt") !== "shown" && (
+            <LoginPrompt hidePrompt={() => setIsShowingLoginPrompt(false)} />
+          )}
+        {testGenerationError.trim() !== "" && (
+          <ErrorCompo
+            errorMsg={testGenerationError}
+            hideError={() => setTestGenerationError("")}
+            retryFunc={generateTest}
+          />
         )}
-      {testGenerationError.trim() !== "" && (
-        <ErrorCompo
-          errorMsg={testGenerationError}
-          hideError={() => setTestGenerationError("")}
-          retryFunc={generateTest}
-        />
-      )}
-      {/* main Heading */}
-      <div className="max-w-5xl w-full p-6 mx-auto">
-        <h2 className="text-4xl font-bold font-sans text-center">
-          Master Any Subject with AI
-        </h2>
-        <p className="text-text-muted text-base text-center">
-          Instantly generate quizzes, get evaluated, and track your progress.
-        </p>
-      </div>
-      {/* main Heading */}
-      <div
-        id="container"
-        className="flex justify-center max-w-7xl w-full mx-auto max-lg:flex-col-reverse"
-      >
-        {/* left side  */}
-        <div className="w-[25%] p-6 lg:space-y-10 max-lg:w-full max-lg:grid max-lg:grid-cols-2 max-lg:gap-4 max-xs:grid-cols-1">
-          {/* ----------- Configuration  box container ------------ */}
-          <ConfigurationBox />
-          {/* ----------- Configuration box container ------------ */}
-          {/* ----------- How it Works Section------------ */}
-          <HowItWorks />
-          {/* ----------- How it Works Section------------ */}
+        {/* main Heading */}
+        <div className="max-w-5xl w-full p-6 mx-auto">
+          <h2 className="text-4xl font-bold font-sans text-center">
+            Master Any Subject with AI
+          </h2>
+          <p className="text-text-muted text-base text-center">
+            Instantly generate quizzes, get evaluated, and track your progress.
+          </p>
         </div>
-        {/* left side  */}
-        {/* right side  */}
-        <div className="w-[75%] p-6 space-y-10 max-lg:w-full">
-          <InputSection generateTest={generateTest} />
-          {/* Trending Topics */}
-          <TrendingTopics />
-          {/* Trending Topics */}
+        {/* main Heading */}
+        <div
+          id="container"
+          className="flex justify-center max-w-7xl w-full mx-auto max-lg:flex-col-reverse"
+        >
+          {/* left side  */}
+          <div className="w-[25%] p-6 lg:space-y-10 max-lg:w-full max-lg:grid max-lg:grid-cols-2 max-lg:gap-4 max-xs:grid-cols-1">
+            {/* ----------- Configuration  box container ------------ */}
+            <ConfigurationBox />
+            {/* ----------- Configuration box container ------------ */}
+            {/* ----------- How it Works Section------------ */}
+            <HowItWorks />
+            {/* ----------- How it Works Section------------ */}
+          </div>
+          {/* left side  */}
+          {/* right side  */}
+          <div className="w-[75%] p-6 space-y-10 max-lg:w-full">
+            <InputSection generateTest={generateTest} />
+            {/* Trending Topics */}
+            <TrendingTopics />
+            {/* Trending Topics */}
+          </div>
+          {/* right side  */}
         </div>
-        {/* right side  */}
-      </div>
-    </main>
-    <Footer/>
+      </main>
+      <Footer />
     </>
   );
 }
