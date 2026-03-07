@@ -1,19 +1,17 @@
 import { Lock, ShieldCheck } from "lucide-react";
 import { useUser } from "../hooks/useUser";
-import {  useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const handleLogin = () => {
     window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google`;
   };
 
-  const navigate = useNavigate();
-
   const { user } = useUser();
 
- if(user){
-  return navigate("/profile", {replace:true})
- }
+  if (user) {
+    return <Navigate to="/profile" replace />;
+  }
 
   return (
     <main className="bg-secondary/20 w-full min-h-screen flex justify-center items-center p-6">
