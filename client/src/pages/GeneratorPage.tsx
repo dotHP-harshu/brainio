@@ -14,6 +14,15 @@ import LoginPrompt from "../components/LoginPrompt";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useUser } from "../hooks/useUser";
+import HelmetSeo from "../components/HelmetSeo";
+
+const generatorPageMetadata = {
+  title: "Test Generator - Brainio",
+  description:
+    "Generate personalized learning assessments and quizzes with Brainio's AI-powered test generator. Customize tests based on your learning goals.",
+  keywords:
+    "test generator, quiz generator, personalized learning, AI-powered test, educational assessment, learning goals, Brainio",
+};
 
 function GeneratorPage() {
   const [generating, setGenerating] = useState<boolean>(false);
@@ -60,6 +69,11 @@ function GeneratorPage() {
 
   return (
     <>
+      <HelmetSeo
+        title={generatorPageMetadata.title}
+        description={generatorPageMetadata.description}
+        keywords={generatorPageMetadata.keywords}
+      />
       <Header />
       <main>
         {isShowingLoginPrompt &&

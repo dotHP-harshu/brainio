@@ -11,6 +11,7 @@ import { useResultContext } from "../context/resultContext";
 import ResultNotFound from "../components/Result/ResultNotFound";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
+import HelmetSeo from "../components/HelmetSeo";
 
 // const RESULT_DATA = {
 //     title: "Advanced Algebra II",
@@ -22,6 +23,14 @@ import { useUser } from "../hooks/useUser";
 //     accuracyRate: 90,
 //     aiInsight: "You're a natural at Algebra! Your speed on basic equations is top-tier. Focus a bit more on Quadratic Equations next time to hit that 100%."
 // }
+
+const testResultsMetadata = {
+  title: "Test Results - Brainio",
+  description:
+    "View your test results, including scores, accuracy rate, and personalized feedback to help you improve.",
+  keywords:
+    "test results, accuracy rate, test performance, Brainio feedback, learning insights",
+};
 
 const ResultPage = () => {
   const { testResult: RESULT_DATA } = useResultContext();
@@ -35,6 +44,11 @@ const ResultPage = () => {
 
   return (
     <>
+      <HelmetSeo
+        title={testResultsMetadata.title}
+        description={testResultsMetadata.description}
+        keywords={testResultsMetadata.keywords}
+      />
       <div className="min-h-screen bg-secondary/20 text-black pb-10">
         <main className="max-w-4xl mx-auto px-4 pt-12 flex flex-col items-center">
           {/* Test Completed Header */}
@@ -68,10 +82,7 @@ const ResultPage = () => {
           <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="box box-shadow bg-white p-6 flex flex-col gap-4">
               <div className="flex items-center gap-2 text-primary">
-                <CheckCircle2
-                  size={18}
-                  className="text-primary"
-                />
+                <CheckCircle2 size={18} className="text-primary" />
                 <span className="uppercase font-bold text-[10px] tracking-widest text-black">
                   Correct Answers
                 </span>

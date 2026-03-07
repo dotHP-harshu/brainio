@@ -12,6 +12,7 @@ import { ResultContextProvider } from "./context/resultContext";
 import HistoryPage from "./pages/HistoryPage";
 import PageNotFound from "./pages/PageNotFound";
 import HomePage from "./pages/HomePage";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   const Router = createBrowserRouter([
@@ -62,7 +63,9 @@ function App() {
     <UserProvider>
       <TestContextProvider>
         <ResultContextProvider>
-          <RouterProvider router={Router} />
+          <HelmetProvider>
+            <RouterProvider router={Router} />
+          </HelmetProvider>
         </ResultContextProvider>
       </TestContextProvider>
     </UserProvider>

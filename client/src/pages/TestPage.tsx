@@ -3,7 +3,11 @@ import BrainioLogo from "../components/BrainioLogo";
 import ObjectiveQuestion from "../components/TestPage/ObjectiveQuestion";
 import SubjectiveQuestion from "../components/TestPage/SubjectiveQuestion";
 import { useEffect, useReducer, useState } from "react";
-import type { AnswerInterface, SubmitTestInterface, TestResultInterface } from "../types/types";
+import type {
+  AnswerInterface,
+  SubmitTestInterface,
+  TestResultInterface,
+} from "../types/types";
 import StartTestModal from "../components/Modals/StartTestModal";
 import SubmitModal from "../components/Modals/SubmitModal";
 import ExitModal from "../components/Modals/ExitModal";
@@ -17,17 +21,15 @@ import BanterLoader from "../components/BanterLoader";
 import ErrorCompo from "../components/ErrorCompo";
 import { useResultContext } from "../context/resultContext";
 import { useUser } from "../hooks/useUser";
+import HelmetSeo from "../components/HelmetSeo";
 
 function TestPage() {
-
   // contexts
   const { test: TEST_DATA, setTest } = useTestContext();
-  const { setTestResult } = useResultContext()
+  const { setTestResult } = useResultContext();
 
   if (!TEST_DATA) {
-    return (
-      <TestNotFound />
-    );
+    return <TestNotFound />;
   }
 
   // page states
@@ -36,18 +38,18 @@ function TestPage() {
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
   const [showExitModal, setShowExitModal] = useState<boolean>(false);
   const [timeOver, setTimeOver] = useState<boolean>(false);
-  const [submitting, setSubmitting] = useState<boolean>(false)
-  const [testPageError, setTestPageError] = useState<string>("")
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [testPageError, setTestPageError] = useState<string>("");
   const [time, setTime] = useState<number>(TEST_DATA.questions.length * 60);
 
   const [answers, answerDispatch] = useReducer(
     answerReducer,
     TEST_DATA.questions.map(
-      (q): AnswerInterface => ({ question: q, userAnswer: "" })
-    )
+      (q): AnswerInterface => ({ question: q, userAnswer: "" }),
+    ),
   );
 
-  const { user } = useUser()
+  const { user } = useUser();
 
   const navigate = useNavigate();
 
@@ -67,45 +69,52 @@ function TestPage() {
     };
   }, [isStartedTest, time]);
 
-
   const startTest = () => {
     setIsStartedTest(true);
   };
 
   const handleTestSubmit = async () => {
-
     const testToSubmit: SubmitTestInterface = {
       title: TEST_DATA.testTitle,
-      timeSpent: (TEST_DATA.questions.length * 60) - time,
+      timeSpent: TEST_DATA.questions.length * 60 - time,
       numberOfQuestions: TEST_DATA.questions.length,
       answers: answers,
-      difficulty: TEST_DATA.difficulty
-    }
-    setSubmitting(true)
+      difficulty: TEST_DATA.difficulty,
+    };
+    setSubmitting(true);
     const { data, error } = await evaluateTestApi(testToSubmit);
     if (error) {
-      setSubmitting(false)
-      return setTestPageError(error)
+      setSubmitting(false);
+      return setTestPageError(error);
     }
     if (data) {
       const result = data as TestResultInterface;
       setTestResult(result);
       // save result if user is logged in
       if (user) {
-        const { error } = await setTestApi(user._id, result.title, result.result, result.resultLabel, result.correctAnswers, result.totalQuestions, result.difficulty, result.timeSpent, result.accuracyRate, result.aiInsight);
+        const { error } = await setTestApi(
+          user._id,
+          result.title,
+          result.result,
+          result.resultLabel,
+          result.correctAnswers,
+          result.totalQuestions,
+          result.difficulty,
+          result.timeSpent,
+          result.accuracyRate,
+          result.aiInsight,
+        );
         if (error) {
         }
       }
-      navigate("/result")
+      navigate("/result");
     }
-
   };
 
   const handleTestExit = () => {
     navigate("/generator");
-    setTest(null)
+    setTest(null);
   };
-
 
   // conditional rendering
   if (submitting) {
@@ -113,7 +122,7 @@ function TestPage() {
       <div className="w-screen h-screen fixed top-0 left-0 z-50 bg-secondary/30 backdrop-blur-3xl flex justify-center items-center">
         <BanterLoader para="Analysing your test" />
       </div>
-    )
+    );
   }
 
   if (!isStartedTest) {
@@ -133,9 +142,18 @@ function TestPage() {
 
   return (
     <>
-      {
-        testPageError !== "" && <ErrorCompo errorMsg={testPageError} hideError={() => setTestPageError("")} retryFunc={handleTestSubmit} />
-      }
+      <HelmetSeo
+        title="Test - Brainio"
+        description="Take the ${test.title} test on Brainio. Get instant feedback and improve your learning with personalized insights."
+        keywords={` online test, educational assessment, personalized learning`}
+      />
+      {testPageError !== "" && (
+        <ErrorCompo
+          errorMsg={testPageError}
+          hideError={() => setTestPageError("")}
+          retryFunc={handleTestSubmit}
+        />
+      )}
       {showSubmitModal && (
         <SubmitModal
           doNext={handleTestSubmit}
@@ -205,8 +223,9 @@ function TestPage() {
               <button
                 onClick={() => setCurrentQuestionIndex((prev) => prev - 1)}
                 disabled={currentQuestionIndex + 1 <= 1}
-                className={`${currentQuestionIndex + 1 <= 1 ? "opacity-25" : ""
-                  } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none flex justify-center items-center gap-2`}
+                className={`${
+                  currentQuestionIndex + 1 <= 1 ? "opacity-25" : ""
+                } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none flex justify-center items-center gap-2`}
               >
                 <span>
                   <ArrowLeft />
@@ -218,10 +237,11 @@ function TestPage() {
                 disabled={
                   currentQuestionIndex + 1 >= TEST_DATA.questions.length
                 }
-                className={` ${currentQuestionIndex + 1 >= TEST_DATA.questions.length
-                  ? "opacity-25"
-                  : ""
-                  } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none bg-primary/50 flex justify-center items-center gap-2`}
+                className={` ${
+                  currentQuestionIndex + 1 >= TEST_DATA.questions.length
+                    ? "opacity-25"
+                    : ""
+                } box shadow-[2px_2px_var(--color-text)] px-4 py-1 outline-none cursor-pointer text-base font-bold transition-shadow duration-300 select-none hover:shadow-none bg-primary/50 flex justify-center items-center gap-2`}
               >
                 <span className="max-xs:hidden">Next</span>
                 <span>

@@ -13,6 +13,7 @@ import type {
 import { ArrowLeft, Search } from "lucide-react";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import HelmetSeo from "../components/HelmetSeo";
 
 export type TestType = "MCQ" | "Q&A";
 export type TopicIcon = "beaker" | "book" | "calculator";
@@ -99,11 +100,19 @@ export interface HistoryPageData {
 //   currentPage: 1,
 // };
 
+const historyMetadata = {
+  title: "Test History - Brainio",
+  description:
+    "Explore your test history and track your progress over time on Brainio.",
+  keywords:
+    "test history, learning progress, test results, Brainio, educational tracking",
+};
+
 function HistoryPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   // const [testsLimit, setTestLimit] = useState(5);
-  const testsLimit = 5
+  const testsLimit = 5;
   const [isLoadingTests, setIsLoadingTests] = useState(true);
   const [isLoadingPage, setIsLoadingPage] = useState(true);
   const [historyState, setHistoryState] =
@@ -111,7 +120,7 @@ function HistoryPage() {
 
   const { user } = useUser();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [testsHistory, setTestsHistory] =
     useState<completedTestsHistoryInterface | null>(null);
@@ -133,7 +142,7 @@ function HistoryPage() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    getTests( testsLimit, page, searchQuery);
+    getTests(testsLimit, page, searchQuery);
   };
 
   // get tests
@@ -143,11 +152,7 @@ function HistoryPage() {
     search: string = "",
   ) => {
     setIsLoadingTests(true);
-    const { error, data } = await getTestsApi(
-      testsLimit,
-      currentPage,
-      search,
-    );
+    const { error, data } = await getTestsApi(testsLimit, currentPage, search);
     if (error) {
       return setIsLoadingTests(false);
     } else if (data) {
@@ -188,7 +193,7 @@ function HistoryPage() {
 
   useEffect(() => {
     if (!user) return;
-    getTests( testsLimit, currentPage, searchQuery);
+    getTests(testsLimit, currentPage, searchQuery);
   }, [user, currentPage, searchQuery, testsLimit]);
 
   // optional rendering
@@ -201,85 +206,95 @@ function HistoryPage() {
   }
 
   return (
-    <div className="min-h-screen">
-      <button onClick={()=>navigate("/profile", {replace:true})} className="outline-none hover:underline text-lg my-4 flex justify-center items-center text-text-muted hover:text-text transition-colors duration-300 cursor-pointer ml-4">
-        <span>
-          <ArrowLeft />
-        </span>
-        <span>back to profile</span>
-      </button>
-      {historyState && (
-        <main className="max-w-7xl mx-auto px-6 py-8">
-          {/* Page Title */}
-          <h1 className="text-5xl font-bold mb-8 max-sm:text-2xl">
-            YOUR TEST HISTORY
-          </h1>
+    <>
+      <HelmetSeo
+        title={historyMetadata.title}
+        description={historyMetadata.description}
+        keywords={historyMetadata.keywords}
+      />
+      <div className="min-h-screen">
+        <button
+          onClick={() => navigate("/profile", { replace: true })}
+          className="outline-none hover:underline text-lg my-4 flex justify-center items-center text-text-muted hover:text-text transition-colors duration-300 cursor-pointer ml-4"
+        >
+          <span>
+            <ArrowLeft />
+          </span>
+          <span>back to profile</span>
+        </button>
+        {historyState && (
+          <main className="max-w-7xl mx-auto px-6 py-8">
+            {/* Page Title */}
+            <h1 className="text-5xl font-bold mb-8 max-sm:text-2xl">
+              YOUR TEST HISTORY
+            </h1>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Table and Pagination */}
-            <div className="lg:col-span-2 max-lg:order-2">
-              {/* Search and Filters */}
-              <div className="flex gap-4 mb-8">
-                <SearchInput value={searchQuery} onChange={setSearchQuery} />
-                <button
-                  onClick={() => {
-                    setCurrentPage(1);
-                    getTests( testsLimit, 1, searchQuery);
-                  }}
-                  className="bg-primary box box-shadow p-2 flex justify-center items-center gap-2 font-sans font-semibold uppercase cursor-pointer"
-                >
-                  <span>
-                    <Search />
-                  </span>
-                  <span className="max-sm:hidden">Search</span>
-                </button>
+            {/* Main Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Left Column - Table and Pagination */}
+              <div className="lg:col-span-2 max-lg:order-2">
+                {/* Search and Filters */}
+                <div className="flex gap-4 mb-8">
+                  <SearchInput value={searchQuery} onChange={setSearchQuery} />
+                  <button
+                    onClick={() => {
+                      setCurrentPage(1);
+                      getTests(testsLimit, 1, searchQuery);
+                    }}
+                    className="bg-primary box box-shadow p-2 flex justify-center items-center gap-2 font-sans font-semibold uppercase cursor-pointer"
+                  >
+                    <span>
+                      <Search />
+                    </span>
+                    <span className="max-sm:hidden">Search</span>
+                  </button>
+                </div>
+
+                {isLoadingTests && <div>Loading tests...</div>}
+                {!isLoadingTests &&
+                  testsHistory &&
+                  (testsHistory.tests.length === 0 ? (
+                    <div className="flex justify-center items-center w-full ">
+                      <div className="flex flex-col justify-center items-center">
+                        <h2 className="text-2xl font-bold">No tests found</h2>
+                        <p className="text-lg font-medium">
+                          You have not taken any tests yet.
+                        </p>
+                        <p className="text-lg font-medium">
+                          Click{" "}
+                          <a href="/generator" className="text-primary ">
+                            here
+                          </a>{" "}
+                          to take a test
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <HistoryTable
+                        items={testsHistory?.tests}
+                        onReview={handleReview}
+                        onRetake={handleRetake}
+                      />
+                      <Pagination
+                        currentPage={currentPage}
+                        totalPages={testsHistory.totalPage}
+                        onPageChange={handlePageChange}
+                      />
+                    </>
+                  ))}
               </div>
 
-              {isLoadingTests && <div>Loading tests...</div>}
-              {!isLoadingTests &&
-                testsHistory &&
-                (testsHistory.tests.length === 0 ? (
-                  <div className="flex justify-center items-center w-full ">
-                    <div className="flex flex-col justify-center items-center">
-                      <h2 className="text-2xl font-bold">No tests found</h2>
-                      <p className="text-lg font-medium">
-                        You have not taken any tests yet.
-                      </p>
-                      <p className="text-lg font-medium">
-                        Click{" "}
-                        <a href="/generator" className="text-primary ">
-                          here
-                        </a>{" "}
-                        to take a test
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <HistoryTable
-                      items={testsHistory?.tests}
-                      onReview={handleReview}
-                      onRetake={handleRetake}
-                    />
-                    <Pagination
-                      currentPage={currentPage}
-                      totalPages={testsHistory.totalPage}
-                      onPageChange={handlePageChange}
-                    />
-                  </>
-                ))}
+              {/* Right Column - Stats and Pro Tip */}
+              <div className="space-y-6 max-lg:order-1">
+                <StatsCard stats={historyState} onExport={handleExport} />
+                <ProTip />
+              </div>
             </div>
-
-            {/* Right Column - Stats and Pro Tip */}
-            <div className="space-y-6 max-lg:order-1">
-              <StatsCard stats={historyState} onExport={handleExport} />
-              <ProTip />
-            </div>
-          </div>
-        </main>
-      )}
-    </div>
+          </main>
+        )}
+      </div>
+    </>
   );
 }
 
