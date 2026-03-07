@@ -1,9 +1,20 @@
 import { Lock, ShieldCheck } from "lucide-react";
+import { useUser } from "../hooks/useUser";
+import {  useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  const handleLogin =()=>{
-    window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google`
-  }
+  const handleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google`;
+  };
+
+  const navigate = useNavigate();
+
+  const { user } = useUser();
+
+ if(user){
+  return navigate("/profile", {replace:true})
+ }
+
   return (
     <main className="bg-secondary/20 w-full min-h-screen flex justify-center items-center p-6">
       <div className="box box-shadow p-10 flex justify-center items-center flex-col max-w-lg space-y-10">
@@ -19,7 +30,10 @@ function LoginPage() {
             results.
           </p>
         </div>
-        <button onClick={handleLogin} className="border w-full p-2 outline-none cursor-pointer flex justify-center items-center gap-4 select-none hover:shadow-[5px_5px_var(--color-text)] hover:-translate-[5px] transition duration-300">
+        <button
+          onClick={handleLogin}
+          className="border w-full p-2 outline-none cursor-pointer flex justify-center items-center gap-4 select-none hover:shadow-[5px_5px_var(--color-text)] hover:-translate-[5px] transition duration-300"
+        >
           <span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +64,9 @@ function LoginPage() {
           <span className="text-lg font-semibold">Continue with Google</span>
         </button>
         <div>
-          <p className="text-sm text-text-muted flex gap-2 items-center justify-center text-center"><Lock size={16}/> Secure Google sign-in. No passwords required.</p>
+          <p className="text-sm text-text-muted flex gap-2 items-center justify-center text-center">
+            <Lock size={16} /> Secure Google sign-in. No passwords required.
+          </p>
         </div>
       </div>
     </main>
