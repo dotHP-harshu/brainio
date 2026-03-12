@@ -4,6 +4,7 @@ import express from "express";
 import passport from "./config/passport";
 import expressSession from "express-session";
 import config from "./config/config";
+import MongoStore from "connect-mongo";
 import cors from "cors";
 const app = express();
 import dns from "dns";
@@ -32,6 +33,11 @@ app.use(
     secret: config.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
+    store: MongoStore.create({
+      mongoUrl: config.MONGOOSE_URI,
+      autoRemove: "native",
+      ttl: 7 * 24 * 60 * 60,
+    }),
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: "none",
