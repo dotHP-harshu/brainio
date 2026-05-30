@@ -14,11 +14,18 @@ AuthRouter.get(
 AuthRouter.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: `${config.CLIENT_URL}/login`,
+    failureRedirect: `${config.CLIENT_URL}/login?error=Authentication+failed.+Please+try+again.`,
   }),
   (req: Request, res: Response) => {
-
-    res.redirect(`${config.CLIENT_URL}/profile`);
+    // Force session save before redirect (critical for serverless — Vercel may
+    // terminate the function before the async Mongo write completes otherwise)
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error after OAuth:", err);
+        return res.redirect(`${config.CLIENT_URL}/login?error=Session+error.+Please+try+again.`);
+      }
+      res.redirect(`${config.CLIENT_URL}/profile`);
+    });
   },
 );
 

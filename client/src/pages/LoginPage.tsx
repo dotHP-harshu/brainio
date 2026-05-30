@@ -1,6 +1,6 @@
 import { Lock, ShieldCheck } from "lucide-react";
 import { useUser } from "../hooks/useUser";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import HelmetSeo from "../components/HelmetSeo";
 
 const loginMetadata = {
@@ -12,6 +12,9 @@ const loginMetadata = {
 };
 
 function LoginPage() {
+  const [searchParams] = useSearchParams();
+  const error = searchParams.get("error");
+
   const handleLogin = () => {
     window.location.href = `${import.meta.env.VITE_SERVER_URL}/auth/google`;
   };
@@ -34,6 +37,11 @@ function LoginPage() {
           <div className="h-fit aspect-square flex justify-center items-center bg-primary/20 p-2 rounded-full">
             <ShieldCheck className="text-primary" size={30} />
           </div>
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm text-center">
+              {error}
+            </div>
+          )}
           <div className="space-y-6">
             <h3 className="text-5xl text-center font-bold tracking-tighter">
               Welcome to Brainio
