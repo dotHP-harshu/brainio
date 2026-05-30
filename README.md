@@ -376,15 +376,15 @@ VITE_API_URL=http://localhost:5000
 - **Daily backups** of user data
 - **Content moderation** for generated questions
 
----
+<!-- --- -->
 
-## Performance
+<!-- ## Performance
 
 - **Response Time:** < 2 seconds for standard operations
 - **Concurrent Users:** Supports up to 1000 concurrent users
 - **Uptime:** 99.5% availability during business hours
 - **Auto-scaling:** Horizontal scaling support
-- **Database:** Optimized MongoDB queries with indexing
+- **Database:** Optimized MongoDB queries with indexing -->
 
 ---
 
