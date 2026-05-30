@@ -23,7 +23,7 @@ function ExplanationModal({
 
   useEffect(() => {
     const fetchExplanation = async () => {
-      const { data, error } = await explainMistakeApi(
+      const { data } = await explainMistakeApi(
         question,
         correctAnswer,
         userAnswer,

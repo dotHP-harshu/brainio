@@ -22,7 +22,7 @@ function CheatSheetModal({
 
   useEffect(() => {
     const fetchCheatSheet = async () => {
-      const { data, error } = await generateCheatSheetApi(topic, difficulty);
+      const { data } = await generateCheatSheetApi(topic, difficulty);
       if (data) {
         setCheatSheet((data as { cheatSheet: string }).cheatSheet);
       }
