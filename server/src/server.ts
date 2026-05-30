@@ -1,14 +1,8 @@
 import app from "./app";
+import config from "./config/config";
 
-// dbConnection()
-//   .then(() => {
-//     console.log("Database connected");
-//     app.listen(config.PORT || 3000, () => {
-//       console.log("Server start running on port 3000");
-//     });
-//   })
-//   .catch((error) => {
-//     console.log("there is a error on connecting database.", error);
-//   });
+app.listen(config.PORT || 5000, () => {
+  console.log(`Dev server running on port ${config.PORT || 5000}`);
+});
 
 export default app;

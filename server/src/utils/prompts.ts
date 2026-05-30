@@ -36,6 +36,23 @@ Schema:
 
 `
 
+export const EXPLAIN_MISTAKE_PROMPT = `
+You are an encouraging AI tutor.
+Question: {question}
+Correct Answer: {correctAnswer}
+User's Answer: {userAnswer}
+Task: In 2-3 short, encouraging sentences, explain the logical gap in the user's understanding. Do not just repeat the correct answer; explain the 'why' and provide a quick tip to remember it. Return ONLY plain text, no JSON.
+`
+
+export const CHEAT_SHEET_PROMPT = `
+Create a concise, high-yield cheat sheet for the topic: "{topic}" at a "{difficulty}" level.
+Format in clean Markdown. Include:
+1. 3 Core Concepts (bullet points)
+2. 1 Common Pitfall (what students usually get wrong)
+3. 1 Quick Mnemonic or Memory Hack
+Keep it under 250 words. Return ONLY valid Markdown.
+`
+
 export const EVALUATION_PROMPT = `
 You are an intelligent assessment evaluator that analyzes test performance and generates structured result data.
 

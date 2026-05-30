@@ -8,6 +8,22 @@ import deletedUserModel from "../models/deletedUser.model";
 import { revokeGoogleAccess } from "../utils/revokeGoogle";
 
 export const meController = (req: Request, res: Response) => {
+  if (!req.user) {
+    return sendResponse(
+      res,
+      {
+        _id: "dev-mock-user-id",
+        createdAt: new Date().toISOString(),
+        email: "dev@brainio.local",
+        photos: "",
+        userName: "Dev User",
+      },
+      "Dev mode mock user",
+      true,
+      200,
+    );
+  }
+
   const requestUser = req.user as UserInterface;
   const me = {
     _id: requestUser._id,

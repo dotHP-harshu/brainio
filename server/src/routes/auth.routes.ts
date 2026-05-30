@@ -22,7 +22,7 @@ AuthRouter.get(
   },
 );
 
-AuthRouter.get("/me", authMiddleware, meController);
+AuthRouter.get("/me", meController);
 AuthRouter.post("/changePhoto", authMiddleware, changePhotoController)
 AuthRouter.get("/logout", authMiddleware, logoutController );
 AuthRouter.get("/delete",authMiddleware, deleteUserController)

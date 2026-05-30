@@ -90,7 +90,7 @@ function TestPage() {
     if (data) {
       const result = data as TestResultInterface;
       setTestResult(result);
-      // save result if user is logged in
+      sessionStorage.setItem("brainio_test_answers", JSON.stringify(answers));
       if (user) {
         const { error } = await setTestApi(
           user._id,

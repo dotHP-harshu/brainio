@@ -92,3 +92,17 @@ export const getTestsApi = (limit: number, page: number, search: string = "") =>
 
 export const getHistoryStateApi = (userId: string) =>
   request("GET", `/history/get/state/${userId}`);
+
+export const explainMistakeApi = (
+  question: string,
+  correctAnswer: string,
+  userAnswer: string,
+) =>
+  request("POST", "/tests/explain-mistake", {
+    question,
+    correctAnswer,
+    userAnswer,
+  });
+
+export const generateCheatSheetApi = (topic: string, difficulty: string) =>
+  request("POST", "/tests/cheatsheet", { topic, difficulty });

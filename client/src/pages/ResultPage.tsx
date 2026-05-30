@@ -6,12 +6,20 @@ import {
   Sparkles,
   LayoutDashboard,
   ArrowLeft,
+  ChevronDown,
+  ChevronUp,
+  HelpCircle,
+  FileText,
 } from "lucide-react";
+import { useState } from "react";
 import { useResultContext } from "../context/resultContext";
 import ResultNotFound from "../components/Result/ResultNotFound";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import HelmetSeo from "../components/HelmetSeo";
+import ExplanationModal from "../components/Modals/ExplanationModal";
+import CheatSheetModal from "../components/Modals/CheatSheetModal";
+import type { AnswerInterface } from "../types/types";
 
 // const RESULT_DATA = {
 //     title: "Advanced Algebra II",
@@ -37,6 +45,18 @@ const ResultPage = () => {
   const navigate = useNavigate();
 
   const { user } = useUser();
+
+  const [showReview, setShowReview] = useState(false);
+  const [explanationQuestion, setExplanationQuestion] = useState<{
+    question: string;
+    correctAnswer: string;
+    userAnswer: string;
+  } | null>(null);
+  const [showCheatSheet, setShowCheatSheet] = useState(false);
+
+  const savedAnswers: AnswerInterface[] = JSON.parse(
+    sessionStorage.getItem("brainio_test_answers") || "[]",
+  );
 
   if (!RESULT_DATA) {
     return <ResultNotFound />;
@@ -139,8 +159,86 @@ const ResultPage = () => {
             </div>
           </div>
 
+          {/* Review Answers Section */}
+          {savedAnswers.length > 0 && (
+            <div className="w-full mb-12">
+              <button
+                onClick={() => setShowReview(!showReview)}
+                className="w-full box box-shadow bg-white p-4 flex items-center justify-between font-bold text-lg uppercase tracking-wider cursor-pointer"
+              >
+                <span className="flex items-center gap-3">
+                  <CheckCircle2 size={20} /> Review Your Answers
+                </span>
+                {showReview ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              {showReview && (
+                <div className="mt-4 space-y-4">
+                  {savedAnswers.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="box box-shadow bg-white p-6"
+                    >
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">
+                        Q{idx + 1} — {item.question.type === "subjective" ? "Subjective" : "Objective"}
+                      </p>
+                      <p className="font-bold text-lg mb-3">{item.question.question}</p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span className="font-bold uppercase text-[10px] tracking-widest text-gray-500">Your Answer:</span>
+                          <p className="mt-1">{item.userAnswer || "(No answer)"}</p>
+                        </div>
+                        <div>
+                          <span className="font-bold uppercase text-[10px] tracking-widest text-gray-500">Correct Answer:</span>
+                          <p className="mt-1">{item.question.correctAnswer}</p>
+                        </div>
+                      </div>
+                      {item.question.type === "subjective" &&
+                        item.userAnswer.toLowerCase().trim() !== item.question.correctAnswer.toLowerCase().trim() && (
+                          <button
+                            onClick={() =>
+                              setExplanationQuestion({
+                                question: item.question.question,
+                                correctAnswer: item.question.correctAnswer,
+                                userAnswer: item.userAnswer,
+                              })
+                            }
+                            className="mt-4 box box-shadow bg-secondary px-4 py-2 flex items-center gap-2 font-bold text-sm uppercase cursor-pointer"
+                          >
+                            <HelpCircle size={16} /> Why am I wrong?
+                          </button>
+                        )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {explanationQuestion && (
+            <ExplanationModal
+              question={explanationQuestion.question}
+              correctAnswer={explanationQuestion.correctAnswer}
+              userAnswer={explanationQuestion.userAnswer}
+              hideModal={() => setExplanationQuestion(null)}
+            />
+          )}
+
+          {showCheatSheet && (
+            <CheatSheetModal
+              topic={RESULT_DATA.title}
+              difficulty={RESULT_DATA.difficulty}
+              hideModal={() => setShowCheatSheet(false)}
+            />
+          )}
+
           {/* Action Buttons */}
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <button
+              onClick={() => setShowCheatSheet(true)}
+              className="box box-shadow bg-secondary text-black p-4 flex items-center justify-center gap-3 font-bold text-lg uppercase tracking-wider hover:-translate-y-1 transition-transform cursor-pointer"
+            >
+              <FileText size={20} /> Generate Cheat Sheet
+            </button>
             <button
               onClick={() => navigate("/generator", { replace: true })}
               className="box box-shadow bg-primary text-white p-4 flex items-center justify-center gap-3 font-bold text-lg uppercase tracking-wider hover:-translate-y-1 transition-transform cursor-pointer"

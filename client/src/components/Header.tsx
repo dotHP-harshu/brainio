@@ -14,7 +14,7 @@ function Header() {
         <div>
           {user ? (
             <span onClick={()=>navigate("/profile", {replace:true})} className="w-fit cursor-pointer aspect-square box box-shadow inline-block">
-              <img src={user.photos} alt="user" className="w-10 h-10 aspect-square object-center object-cover" />
+              {user.photos && <img src={user.photos} alt="user" className="w-10 h-10 aspect-square object-center object-cover" />}
             </span>
           ) : (
             <button onClick={()=>navigate("/login", {replace:true})} className="box box-shadow px-6 py-1 font-semibold bg-secondary cursor-pointer select-none ">
