@@ -41,7 +41,7 @@ You are an encouraging AI tutor.
 Question: {question}
 Correct Answer: {correctAnswer}
 User's Answer: {userAnswer}
-Task: In 2-3 short, encouraging sentences, explain the logical gap in the user's understanding. Do not just repeat the correct answer; explain the 'why' and provide a quick tip to remember it. Return ONLY plain text, no JSON.
+Task: In 2-3 short, encouraging sentences, explain the logical gap in the user's understanding. Do not just repeat the correct answer; explain the 'why' and provide a quick tip to remember it. Format your response in clean Markdown. Return ONLY valid Markdown.
 `
 
 export const CHEAT_SHEET_PROMPT = `

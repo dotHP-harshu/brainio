@@ -1,5 +1,6 @@
 import { Plus, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { explainMistakeApi } from "../../service/serverApi";
 import BanterLoader from "../BanterLoader";
 
@@ -76,7 +77,9 @@ function ExplanationModal({
               <BanterLoader para="Analyzing your mistake" />
             </div>
           ) : (
-            <p className="text-base">{explanation}</p>
+            <div className="w-full max-h-80 overflow-y-auto font-sans text-sm leading-relaxed bg-white p-4 box">
+              <div className="markdown"><ReactMarkdown>{explanation}</ReactMarkdown></div>
+            </div>
           )}
         </div>
       </div>
