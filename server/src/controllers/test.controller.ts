@@ -74,7 +74,7 @@ export async function explainMistakeController(req: Request, res: Response) {
       .replace("{userAnswer}", userAnswer);
 
     const completion = await openai.chat.completions.create({
-      model: "openai/gpt-oss-120b",
+      model: "llama-3.1-8b-instant",
       messages: [{ role: "user", content: prompt }],
     });
 
@@ -102,7 +102,7 @@ export async function generateCheatSheetController(req: Request, res: Response) 
       .replace("{difficulty}", difficulty);
 
     const completion = await openai.chat.completions.create({
-      model: "openai/gpt-oss-120b",
+      model: "llama-3.1-8b-instant",
       messages: [{ role: "user", content: prompt }],
     });
 

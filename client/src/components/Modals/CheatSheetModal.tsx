@@ -1,5 +1,6 @@
 import { Copy, Download, Plus, Check, FileText } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { generateCheatSheetApi } from "../../service/serverApi";
 import BanterLoader from "../BanterLoader";
 
@@ -58,7 +59,7 @@ function CheatSheetModal({
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${topic.replace(/\s+/g, "-").toLowerCase()}-cheatsheet.txt`;
+    a.download = `${topic.replace(/\s+/g, "-").toLowerCase()}-cheatsheet.md`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -88,8 +89,8 @@ function CheatSheetModal({
             </div>
           ) : (
             <>
-              <div className="w-full max-h-80 overflow-y-auto whitespace-pre-wrap font-sans text-sm leading-relaxed bg-white p-4 box">
-                {cheatSheet}
+              <div className="w-full max-h-80 overflow-y-auto font-sans text-sm leading-relaxed bg-white p-4 box">
+                <div className="markdown"><ReactMarkdown>{cheatSheet}</ReactMarkdown></div>
               </div>
               <div className="flex gap-3 w-full">
                 <button
@@ -103,7 +104,7 @@ function CheatSheetModal({
                   onClick={handleDownload}
                   className="flex-1 box box-shadow bg-white text-black px-4 py-2 flex items-center justify-center gap-2 font-bold text-sm uppercase cursor-pointer"
                 >
-                  <Download size={16} /> Download .txt
+                  <Download size={16} /> Download .md
                 </button>
               </div>
             </>

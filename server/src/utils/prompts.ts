@@ -51,6 +51,26 @@ Format in clean Markdown. Include:
 2. 1 Common Pitfall (what students usually get wrong)
 3. 1 Quick Mnemonic or Memory Hack
 Keep it under 250 words. Return ONLY valid Markdown.
+
+Right Format:
+
+# Heading 
+
+Paragraph 
+
+......
+
+Wrong Format:
+
+markdown\`\`\`
+
+# Heading
+
+Paragraph
+......
+
+\`\`\`
+
 `
 
 export const EVALUATION_PROMPT = `

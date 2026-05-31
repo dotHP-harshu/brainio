@@ -21,8 +21,6 @@ function SubjectiveQuestion({
   const [isListening, setIsListening] = useState<boolean>(false);
   const [voiceUnsupported, setVoiceUnsupported] = useState(false);
   const recognitionRef = useRef<any>(null);
-  const answerRef = useRef(answer);
-  answerRef.current = answer;
 
   useEffect(() => {
     const SpeechRecognition =
@@ -39,12 +37,12 @@ function SubjectiveQuestion({
 
     recognition.onresult = (event: any) => {
       let transcript = "";
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      for (let i = 0; i < event.results.length; i++) {
         transcript += event.results[i][0].transcript;
       }
       answerDispatch({
         type: "SET_ANSWER",
-        payload: { ans: answerRef.current + transcript, id: question.id },
+        payload: { ans: transcript, id: question.id },
       });
     };
 
