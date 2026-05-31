@@ -59,8 +59,8 @@ function HowItWork() {
                   Analyze &amp; Adapt
                 </h3>
                 <p className="text-gray-700 font-medium">
-                  Review your session history to see your duration and accuracy
-                  trends.
+                  Review AI mistake explanations, generate cheat sheets, and
+                  track your accuracy trends.
                 </p>
               </div>
             </div>

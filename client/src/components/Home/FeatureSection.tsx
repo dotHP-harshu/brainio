@@ -1,4 +1,4 @@
-import { Bot, ChartBarIncreasing, CloudBackup, FileQuestionMark, Lightbulb } from "lucide-react";
+import { Bot, ChartBarIncreasing, CloudBackup, HelpCircle, Lightbulb, Mic, FileText } from "lucide-react";
 import {motion} from "framer-motion"
 
 function FeatureSection() {
@@ -16,7 +16,7 @@ function FeatureSection() {
           initial={{opacity:0, y:50}}
           whileInView={{opacity:1, y:0}}
           transition={{duration:1}}
-          className="col-span-1 md:col-span-4 neo-card bg-teal-500 p-8  flex flex-col md:flex-row items-center gap-6 overflow-hidden relative group">
+          className="col-span-1 md:col-span-3 neo-card bg-teal-500 p-8  flex flex-col md:flex-row items-center gap-6 overflow-hidden relative group">
             <div className="flex-1 relative z-10 text-white">
               <div className="w-16 h-16 bg-white border-4 border-black rounded-full flex items-center justify-center mb-4 text-text">
                 <span>
@@ -44,7 +44,66 @@ function FeatureSection() {
           initial={{opacity:0, y:50}}
           whileInView={{opacity:1, y:0}}
           transition={{duration:1}}
+          className="col-span-1 md:col-span-3 neo-card bg-purple-500 p-8  flex flex-col md:flex-row items-center gap-6 overflow-hidden relative group">
+            <div className="flex-1 relative z-10 text-white">
+              <div className="w-16 h-16 bg-white border-4 border-black rounded-full flex items-center justify-center mb-4 text-text">
+                <span>
+                  <Mic />
+                </span>
+              </div>
+              <h3 className="text-3xl font-bold mb-3">Voice Input</h3>
+              <p className="text-lg opacity-90 font-medium">
+                Skip the keyboard. Speak your answers naturally using your
+                browser's built-in speech recognition.
+              </p>
+            </div>
+            <div className="w-full md:w-1/3 bg-white border-4 border-black p-4  transform -rotate-3 group-hover:rotate-0 transition-transform text-center">
+              <span className="text-purple-500">
+                <Mic size={40} />
+              </span>
+              <p className="text-xs font-bold mt-1">Tap to speak</p>
+            </div>
+          </motion.div>
+          <motion.div  
+          initial={{opacity:0, y:50}}
+          whileInView={{opacity:1, y:0}}
+          transition={{duration:1}}
           className="col-span-1 md:col-span-2 neo-card bg-secondary p-8  flex flex-col justify-between">
+            <div>
+              <span>
+                <HelpCircle />
+              </span>
+              <h3 className="text-2xl font-bold mb-2">
+                Explain Mistakes
+              </h3>
+              <p className="font-medium">
+                AI breaks down why your answer was off and how to get it right
+                next time.
+              </p>
+            </div>
+          </motion.div>
+          <motion.div  
+          initial={{opacity:0, y:50}}
+          whileInView={{opacity:1, y:0}}
+          transition={{duration:1}}
+          className="col-span-1 md:col-span-2 neo-card bg-gray-300 p-8  flex flex-col justify-between">
+            <div>
+              <span className="text-primary"> 
+                <FileText />
+              </span>
+              <h3 className="text-2xl font-bold mb-2">
+                Cheat Sheet Generator
+              </h3>
+              <p className="font-medium text-gray-600">
+                One-click topic summaries you can copy or download as Markdown.
+              </p>
+            </div>
+          </motion.div>
+          <motion.div  
+          initial={{opacity:0, y:50}}
+          whileInView={{opacity:1, y:0}}
+          transition={{duration:1}}
+          className="col-span-1 md:col-span-2 neo-card bg-white border-2 border-text p-8  flex flex-col justify-between">
             <div>
               <span>
                 <CloudBackup />
@@ -61,24 +120,7 @@ function FeatureSection() {
           initial={{opacity:0, y:50}}
           whileInView={{opacity:1, y:0}}
           transition={{duration:1}}
-          className="col-span-1 md:col-span-2 neo-card bg-gray-300 p-8  flex flex-col justify-between">
-            <div>
-              <span className="text-primary"> 
-                <FileQuestionMark/>
-              </span>
-              <h3 className="text-2xl font-bold mb-2">
-                Subjective &amp; Objective Flex
-              </h3>
-              <p className="font-medium text-gray-600">
-                MCQs for facts, Q&amp;A for depth.
-              </p>
-            </div>
-          </motion.div>
-          <motion.div  
-          initial={{opacity:0, y:50}}
-          whileInView={{opacity:1, y:0}}
-          transition={{duration:1}}
-          className="col-span-1 md:col-span-4 neo-card bg-primary p-8  text-white relative overflow-hidden">
+          className="col-span-1 md:col-span-6 neo-card bg-primary p-8  text-white relative overflow-hidden">
             <div className="relative z-10">
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-white bg-black">

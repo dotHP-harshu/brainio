@@ -28,7 +28,7 @@ function HeroSection() {
       </div>
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="inline-block bg-primary text-white font-bold px-4 py-1 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 transform -rotate-2">
-          Student First v2
+          AI-Powered v2.0
         </div>
         <motion.div
           initial={{ y: 200, opacity: 0 }}
@@ -55,9 +55,9 @@ function HeroSection() {
           </h1>
         </motion.div>
         <p className="text-xl md:text-2xl text-gray-700 mb-10 max-w-2xl mx-auto font-medium">
-          Transform any 5-word topic into a deep-dive assessment. Whether it's
-          Organic Chemistry or ES6 Closures, Brainio builds the path to 100%
-          accuracy.
+          Transform any 5-word topic into a deep-dive assessment. Speak your
+          answers, get AI mistake explanations, and generate cheat sheets —
+          Brainio builds the path to 100% accuracy.
         </p>
         <motion.a
           whileHover={{ scale: 1.05 }}

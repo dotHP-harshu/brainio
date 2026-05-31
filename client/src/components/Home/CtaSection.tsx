@@ -11,9 +11,12 @@ function CtaSection() {
             Level Up?
           </span>
         </h2>
-        <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
+        <p className="text-xl md:text-2xl text-gray-300 mb-6 max-w-2xl mx-auto">
           Don't let your progress vanish. Join as a guest to explore, or sign in
           to build your long-term learning vault.
+        </p>
+        <p className="text-sm font-mono text-gray-400 mb-10 tracking-wide">
+          Voice input  &middot;  AI mistake explanations  &middot;  Cheat sheet generator
         </p>
         <button onClick={()=>navigate("/login", {replace:true})} className="bg-white text-text hover:bg-primary text-xl md:text-2xl font-bold py-4 px-8 rounded-lg shadow-[6px_6px_0px_0px_var(--color-primary)] cursor-pointer select-none hover:shadow-[3px_3px_0px_0px_#ffffff] transition-all border-2 border-transparent hover:border-black flex items-center gap-4 mx-auto">
           <svg
